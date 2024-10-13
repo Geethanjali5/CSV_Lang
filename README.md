@@ -58,10 +58,10 @@ DISPLAY("name", "score", num=2);
 DISPLAY(message="The average score: ", AVERAGE(score));```
 
 
-**Output**:
-```
+Output:
+
 Abhishek, 76
 Geethanjali, 86
-The average score: 77.67```
+The average score: 77.67
 
 
