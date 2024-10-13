@@ -55,9 +55,9 @@ uni, name, score ap4623, Abhishek, 76 gp2755, Geethanjali, 86 dp7865, Darren, 71
 ```csvlang
 LOAD("/path/to/student_scores.csv", header=true);
 DISPLAY("name", "score", num=2);
-DISPLAY(message="The average score: ", AVERAGE(score));```
+DISPLAY(message="The average score: ", AVERAGE(score));
 
-
+```
 Output:
 
 Abhishek, 76
