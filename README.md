@@ -58,7 +58,7 @@ DISPLAY("name", "score", num=2);
 DISPLAY(message="The average score: ", AVERAGE(score));
 
 **Output**:
-```csvlang
+```
 Abhishek, 76
 Geethanjali, 86
 The average score: 77.67
