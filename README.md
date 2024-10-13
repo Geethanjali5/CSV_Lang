@@ -74,8 +74,10 @@ Feel free to explore the project, test it with your own CSV files, and make cont
 ---
 
 ## Contributing
+**Teammates**:  
+1. Geethanjali P [UNI: gp2755]  
+2. Abhishek Paul [UNI: ap4623]
 
-We welcome contributions! If you'd like to improve this project, please feel free to submit a pull request or open an issue. Check out our [contribution guidelines](./CONTRIBUTING.md) for more details.
 
 ---
 
