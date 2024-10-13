@@ -65,3 +65,24 @@ Geethanjali, 86
 The average score: 77.67
 
 
+## Final Thoughts
+
+With **CSVLang**, working with CSV files has never been easier. By abstracting away the complexity of traditional CSV manipulation tools and offering a SQL-like interface, CSVLang allows users to focus on data insights rather than tedious coding tasks. Whether you're cleaning data, generating reports, or performing complex transformations, CSVLang ensures that your workflow is both efficient and intuitive.
+
+Feel free to explore the project, test it with your own CSV files, and make contributions to improve and extend its functionality. We’re always open to suggestions and new ideas!
+
+---
+
+## Contributing
+
+We welcome contributions! If you'd like to improve this project, please feel free to submit a pull request or open an issue. Check out our [contribution guidelines](./CONTRIBUTING.md) for more details.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
+
+---
+
+Happy coding! 
