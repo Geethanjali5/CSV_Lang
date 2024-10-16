@@ -92,7 +92,7 @@ The language recognizes a variety of tokens that form the core structure of vali
 
 | Token Type       | Pattern                       | Examples                                |
 |------------------|-------------------------------|-----------------------------------------|
-| **COMMAND**      | "LOAD|DISPLAY|STORE|..."      | `LOAD`, `DISPLAY`, `MERGE`              |
+| **COMMAND**      | LOAD|DISPLAY|STORE|...        | `LOAD`, `DISPLAY`, `MERGE`              |
 | **STRING_LITERAL**| `\"[^\"]*\"`                 | `"file.csv"`, `"average score"`         |
 | **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`      | `name`, `score`, `header`               |
 | **INTLITERAL**   | `[0-9]+`                      | `2`, `100`, `10`                        |
