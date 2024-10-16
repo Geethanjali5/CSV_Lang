@@ -100,14 +100,41 @@ The language recognizes a variety of tokens that form the core structure of vali
 | **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
 
 
-## 3. Sample Tokenization
+
+## Sample Code and Tokens
 
 Let’s look at a simple CSVLang code example and how the tokens will be categorized:
 
 ### Example CSVLang Code:
+
 ```plaintext
 LOAD("path/to/file.csv", header=true);
-DISPLAY("name", "score", num=2);```
+DISPLAY("name", "score", num=2);
+
+### Tokenized Output:
+
+| Lexeme             | Token Type      |
+|--------------------|-----------------|
+| LOAD               | COMMAND         |
+| (                  | SEPARATOR       |
+| "path/to/file.csv"  | STRING_LITERAL  |
+| ,                  | SEPARATOR       |
+| header             | IDENTIFIER      |
+| =                  | OPERATOR        |
+| true               | IDENTIFIER      |
+| )                  | SEPARATOR       |
+| ;                  | SEPARATOR       |
+| DISPLAY            | COMMAND         |
+| (                  | SEPARATOR       |
+| "name"             | STRING_LITERAL  |
+| ,                  | SEPARATOR       |
+| "score"            | STRING_LITERAL  |
+| ,                  | SEPARATOR       |
+| num                | IDENTIFIER      |
+| =                  | OPERATOR        |
+| 2                  | INTLITERAL      |
+| )                  | SEPARATOR       |
+| ;                  | SEPARATOR       |
 
 
 
