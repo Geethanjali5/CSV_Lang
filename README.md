@@ -43,31 +43,10 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 ---
 
-## **How It Works**
-
-Imagine a scenario where you need to load a CSV file, display two columns, and calculate the average of a numeric column. Here’s how it’s done with CSVLang:
-
-**Input CSV** (`student_scores.csv`):
-uni, name, score ap4623, Abhishek, 76 gp2755, Geethanjali, 86 dp7865, Darren, 71
-
-
-**CSVLang Program**:
-```csvlang
-LOAD("/path/to/student_scores.csv", header=true);
-DISPLAY("name", "score", num=2);
-DISPLAY(message="The average score: ", AVERAGE(score));
-
-```
-Output:
-
-Abhishek, 76
-Geethanjali, 86
-The average score: 77.67
-
 
 # CSVLang Lexical Grammar
 
-This document outlines the lexical grammar for **CSVLang**, a language designed for performing SQL-like operations on CSV files. The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
+The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
 
 ## 1. Token Types
 
