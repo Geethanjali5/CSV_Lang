@@ -92,16 +92,8 @@ This document outlines the lexical grammar for **CSVLang**, a language used for 
 
 ---
 
-## 2. Example Code
 
-Here's an example of CSVLang code:
-
-```plaintext
-LOAD("path/to/file.csv", header=true);
-DISPLAY("name", "score", num=2);
-```
-
-## 3. Token Summary Table
+## 2. Token Summary Table
 
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
@@ -114,7 +106,7 @@ DISPLAY("name", "score", num=2);
 
 
 
-## Sample Code and Tokens
+## 3. Example Code and Tokens
 
 Let’s look at a simple CSVLang code example and how the tokens will be categorized:
 
