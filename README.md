@@ -184,7 +184,7 @@ The shell script `run_lexer.sh` automates running the lexer. Here's how to use i
    
 2. **Output**: The lexer will output the tokens found in the source file and any lexical errors (if applicable).
 
-### 5. Shell Script (run_lexer.sh)
+3. **Shell Script (run_lexer.sh)**:
 The shell script is used to execute the scanner.py file. Below is the content of the script:
 ```bash
 #!/bin/bash
