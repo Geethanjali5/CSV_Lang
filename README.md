@@ -93,11 +93,13 @@ The language recognizes a variety of tokens that form the core structure of vali
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
 | **KEYWORD**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
-| **STRING**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
-| **IDENTIFIER**   | `[a-z A-Z_][a-z A-Z 0-9]*`| `name`, `score`, `header`               |
-| **LITERAL**   | `[0-9]+`                | `2`, `100`, `10`                        |
+| **LITERAL**   | `TRUE`, 'FALSE'                |         `TRUE`, 'FALSE'                |
+| **NUMBER**   | `[0-9]+`                | `2`, `100`, `10`                        |
 | **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
 | **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
+| **STRING**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
+| **IDENTIFIER**   | `[a-z A-Z_][a-z A-Z 0-9]*`| `name`, `score`, `header`               |
+
 
 
 
@@ -222,7 +224,7 @@ Feel free to explore the project, test it with your own CSV files, and make cont
 
 ---
 
-## Contributing
+## Contribution
 **Teammates**:  
 1. Geethanjali P [UNI: gp2755]  
 2. Abhishek Paul [UNI: ap4623]
