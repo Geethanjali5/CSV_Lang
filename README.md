@@ -87,7 +87,7 @@ This document outlines the lexical grammar for **CSVLang**, a language used for 
 
 ### 1.7 IDENTIFIER
 - **Description**: Identifiers are user-defined names for variables, functions, or columns in CSV files.
-- **Pattern**: `[a-z A-Z_][a-z A-Z 0-9_]*`
+- **Pattern**: `[a-z A-Z_][a-z A-Z 0-9]*`
 - **Examples**: `name`, `score`, `header`
 
 ---
