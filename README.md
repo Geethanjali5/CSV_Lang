@@ -90,14 +90,14 @@ The language recognizes a variety of tokens that form the core structure of vali
 
 ## 2. Token Summary Table
 
-| Token Type       | Pattern                       | Examples                                |
-|------------------|-------------------------------|-----------------------------------------|
-| **COMMAND**      | LOAD|DISPLAY|STORE|...        | `LOAD`, `DISPLAY`, `MERGE`              |
-| **STRING_LITERAL**| `\"[^\"]*\"`                 | `"file.csv"`, `"average score"`         |
-| **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`      | `name`, `score`, `header`               |
-| **INTLITERAL**   | `[0-9]+`                      | `2`, `100`, `10`                        |
-| **OPERATOR**     | `[=+*/<>-]`                   | `=`, `+`, `-`, `<`, `>`                 |
-| **SEPARATOR**    | `[(),;]`                      | `(`, `)`, `,`, `;`                      |
+| Token Type       | Pattern                | Examples                                |
+|------------------|------------------------|-----------------------------------------|
+| **COMMAND**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
+| **STRING_LITERAL**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
+| **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`| `name`, `score`, `header`               |
+| **INTLITERAL**   | `[0-9]+`                | `2`, `100`, `10`                        |
+| **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
+| **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
 
 
 ## 3. Sample Tokenization
