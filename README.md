@@ -125,22 +125,22 @@ DISPLAY("name", "score", num=2);
 
 | Lexeme             | Token Type      |
 |--------------------|-----------------|
-| LOAD               | COMMAND         |
+| LOAD               | KEYWORD         |
 | (                  | SEPARATOR       |
-| "path/to/file.csv"  | STRING_LITERAL  |
+| "path/to/file.csv"  | STRING  |
 | ,                  | SEPARATOR       |
-| header             | IDENTIFIER      |
+| header             | KEYWORD      |
 | =                  | OPERATOR        |
-| true               | IDENTIFIER      |
+| true               | LITERAL      |
 | )                  | SEPARATOR       |
 | ;                  | SEPARATOR       |
-| DISPLAY            | COMMAND         |
+| DISPLAY            | KEYWORD         |
 | (                  | SEPARATOR       |
-| "name"             | STRING_LITERAL  |
+| "name"             | STRING  |
+| ,                  | SEPARATOR       | 
+| "score"            | STRING  |
 | ,                  | SEPARATOR       |
-| "score"            | STRING_LITERAL  |
-| ,                  | SEPARATOR       |
-| num                | IDENTIFIER      |
+| num                | KEYWORD      |
 | =                  | OPERATOR        |
 | 2                  | INTLITERAL      |
 | )                  | SEPARATOR       |
