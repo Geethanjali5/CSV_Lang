@@ -152,13 +152,18 @@ The lexer reads a source file, processes it, and outputs the tokens and errors (
 - A source file containing **CSVLang** code (e.g., `test.csvlang`).
 
 ### 2. Installation Steps
-1. Clone or download the repository containing `lexer.py` and `run_lexer.sh`.
+1. Clone or download the repository containing `scanner.py` and `run_scanner.sh`.
 2. Ensure you have Python 3 installed. You can check this by running:
    ```bash
    python3 --version
    ```
 
 If Python 3 is not installed, download it from python.org.
+
+3. Make the shell script executable: You need to make the run_lexer.sh script executable before you can run it. Use the following command:
+   ```bash
+   chmod +x run_lexer.sh
+   ```
 
 
 ## Final Thoughts
