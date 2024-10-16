@@ -207,7 +207,9 @@ fi
 # Execute the lexer Python script
 python3 scanner.py "$file"
 ```
-
+**Notes**
+Ensure that both the run_lexer.sh script and scanner.py file are in the same directory.
+The lexer will print out tokens in the format <Token Type, Token Value>, and will report any errors it encounters.
 
 ## Final Thoughts
 
