@@ -212,6 +212,13 @@ Ensure that both the run_lexer.sh script and scanner.py file are in the same dir
 
 The lexer will print out tokens in the format <Token Type, Token Value>, and will report any errors it encounters.
 
+
+### How to Use:
+- The shell script will run `scanner.py` to tokenize and process CSVLang code files.
+- The instructions above are written assuming the lexer code is stored in `scanner.py` and can be executed via a shell script.
+
+
+
 ## Final Thoughts
 
 With **CSVLang**, working with CSV files has never been easier. By abstracting away the complexity of traditional CSV manipulation tools and offering a SQL-like interface, CSVLang allows users to focus on data insights rather than tedious coding tasks. Whether you're cleaning data, generating reports, or performing complex transformations, CSVLang ensures that your workflow is both efficient and intuitive.
