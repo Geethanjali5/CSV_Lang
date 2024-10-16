@@ -182,7 +182,31 @@ The shell script `run_lexer.sh` automates running the lexer. Here's how to use i
    ./run_lexer.sh test.csvlang
    ```
    
-Output: The lexer will output the tokens found in the source file and any lexical errors (if applicable).
+2. **Output**: The lexer will output the tokens found in the source file and any lexical errors (if applicable).
+
+### 5. Shell Script (run_lexer.sh)
+The shell script is used to execute the scanner.py file. Below is the content of the script:
+```bash
+#!/bin/bash
+
+# Check if a file is provided as an argument
+if [ $# -eq 0 ]; then
+    echo "No source code file provided. Usage: ./run_lexer.sh <source_code_file>"
+    exit 1
+fi
+
+# Store the provided file argument
+file=$1
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    echo "File '$file' not found."
+    exit 1
+fi
+
+# Execute the lexer Python script
+python3 scanner.py "$file"
+```
 
 
 ## Final Thoughts
