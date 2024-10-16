@@ -93,7 +93,7 @@ This document outlines the lexical grammar for **CSVLang**, a language used for 
 ---
 
 
-## 2. Token Summary Table
+## Token Summary Table
 
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
@@ -106,11 +106,9 @@ This document outlines the lexical grammar for **CSVLang**, a language used for 
 
 
 
-## 3. Example Code and Tokens
+## 2. Example CSVLang and Tokens
 
 Let’s look at a simple CSVLang code example and how the tokens will be categorized:
-
-### Example CSVLang Code:
 
 ```plaintext
 LOAD("path/to/file.csv", header=true);
@@ -143,6 +141,21 @@ DISPLAY("name", "score", num=2);
 | )                  | SEPARATOR       |
 | ;                  | SEPARATOR       |
 
+## 3. CSVLang Lexer
+
+The lexer reads a source file, processes it, and outputs the tokens and errors (if any).
+
+## Installation and Usage
+
+### 1. Requirements
+- Python 3.x installed on your machine.
+- A source file containing **CSVLang** code (e.g., `test.csvlang`).
+
+### 2. Installation Steps
+1. Clone or download the repository containing `lexer.py` and `run_lexer.sh`.
+2. Ensure you have Python 3 installed. You can check this by running:
+   ```bash
+   python3 --version
 
 
 ## Final Thoughts
