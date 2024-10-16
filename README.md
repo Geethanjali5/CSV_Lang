@@ -88,11 +88,11 @@ The language recognizes a variety of tokens that form the core structure of vali
 - **Example**:  
   In `DISPLAY("name", "score", num=2);`, the commas and semicolon are separators.
 
-  ## 2. Token Summary Table
+## 2. Token Summary Table
 
 | Token Type       | Pattern                       | Examples                                |
 |------------------|-------------------------------|-----------------------------------------|
-| **COMMAND**      | ``LOAD|DISPLAY|STORE|...``    | `LOAD`, `DISPLAY`, `MERGE`              |
+| **COMMAND**      | "LOAD|DISPLAY|STORE|..."      | `LOAD`, `DISPLAY`, `MERGE`              |
 | **STRING_LITERAL**| `\"[^\"]*\"`                 | `"file.csv"`, `"average score"`         |
 | **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`      | `name`, `score`, `header`               |
 | **INTLITERAL**   | `[0-9]+`                      | `2`, `100`, `10`                        |
