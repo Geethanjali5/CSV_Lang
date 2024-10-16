@@ -165,6 +165,24 @@ If Python 3 is not installed, download it from [python.org](https://www.python.o
    ```bash
    chmod +x run_lexer.sh
    ```
+4. Prepare a CSVLang source file: The lexer processes files containing CSVLang code. You can create a test file, e.g., test.csvlang, with content like this:
+   ```plaintext 
+   LOAD("path/to/file.csv", header=true);
+   DISPLAY("name", "score", num=2);
+   ```
+### 3. Running the Shell Script
+
+The shell script `run_lexer.sh` automates running the lexer. Here's how to use it:
+
+### 4. Step-by-Step Instructions:
+
+1. **Run the shell script**: Provide the CSVLang source file as an argument to the shell script:
+
+   ```bash
+   ./run_lexer.sh test.csvlang
+   ```
+   
+Output: The lexer will output the tokens found in the source file and any lexical errors (if applicable).
 
 
 ## Final Thoughts
