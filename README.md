@@ -169,7 +169,7 @@ If Python 3 is not installed, download it from [python.org](https://www.python.o
 
 The shell script `run_lexer.sh` automates running the lexer. Here's how to use it:
 
-### 4. Step-by-Step Instructions:
+### Step-by-Step Instructions:
 
 1. **Run the shell script**: Provide the CSVLang source file as an argument to the shell script:
 
