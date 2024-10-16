@@ -141,7 +141,7 @@ DISPLAY("name", "score", num=2);
 | )                  | SEPARATOR       |
 | ;                  | SEPARATOR       |
 
-## 3. CSVLang Lexer
+## 4. CSVLang Lexer
 
 The lexer reads a source file, processes it, and outputs the tokens and errors (if any).
 
@@ -156,6 +156,9 @@ The lexer reads a source file, processes it, and outputs the tokens and errors (
 2. Ensure you have Python 3 installed. You can check this by running:
    ```bash
    python3 --version
+   ```
+
+If Python 3 is not installed, download it from python.org.
 
 
 ## Final Thoughts
