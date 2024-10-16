@@ -48,47 +48,55 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
 
+
+# CSVLang Lexical Grammar
+
+This document outlines the lexical grammar for **CSVLang**, a language used for performing operations on CSV files. Below are the token types, patterns, and examples used in the language.
+
 ## 1. Token Types
 
-**CSVLang** recognizes the following token types:
+### 1.1 KEYWORD
+- **Description**: Reserved words that perform specific actions in CSVLang.
+- **Pattern**: `LOAD|CREATE|ADD|REMOVE|DELETE|DISPLAY|STORE|MERGE|AVERAGE|SUM|MAX|MIN|COUNT|PRINT|save|num|sort|filter|tag|path|header`
+- **Examples**: `LOAD`, `DISPLAY`, `STORE`
 
-### 1.1 COMMAND
-- **Description**: Commands that perform specific operations like loading or displaying CSV files.
-- **Pattern**: `LOAD|DISPLAY|STORE|MERGE|INSERT|DELETE|UPDATE`
-- **Example**:  
-  In `LOAD("path/to/file.csv", header=true);`, the token `LOAD` is a command that triggers the loading of a CSV file.
+### 1.2 LITERAL
+- **Description**: Boolean literals that represent `true` or `false`.
+- **Pattern**: `true|false`
+- **Examples**: `true`, `false`
 
-### 1.2 STRING_LITERAL
-- **Description**: A sequence of characters enclosed in double quotes, representing file paths or text values.
-- **Pattern**: `\"[^\"]*\"`
-- **Example**:  
-  In `LOAD("path/to/file.csv", header=true);`, `"path/to/file.csv"` is a string literal representing the file path.
-
-### 1.3 IDENTIFIER
-- **Description**: Represents column names or variable names in CSVLang.
-- **Pattern**: `[a-zA-Z_][a-zA-Z0-9_]*`
-- **Example**:  
-  In `DISPLAY("name", "score", num=2);`, `name`, `score`, and `num` are all identifiers.
-
-### 1.4 INTLITERAL (Integer Literal)
+### 1.3 NUMBER
 - **Description**: A sequence of digits representing an integer.
 - **Pattern**: `[0-9]+`
-- **Example**:  
-  In `num=2`, `2` is an integer literal that specifies the number of rows to display.
+- **Examples**: `123`, `456`
 
-### 1.5 OPERATOR
-- **Description**: Symbols used to assign or compare values.
-- **Pattern**: `[=+*/<>-]`
-- **Example**:  
-  In `header=true`, the `=` symbol is an operator that assigns the value `true` to `header`.
+### 1.4 OPERATOR
+- **Description**: Symbols used for arithmetic, logical, or comparison operations.
+- **Pattern**: `[\+\-\*/%=&|<>]|<=|>=|<>`
+- **Examples**: `+`, `-`, `*`, `/`, `=`, `<=`, `>=`, `<>`
 
-### 1.6 SEPARATOR
-- **Description**: Symbols used for grouping and separating values in the program.
+### 1.5 SEPARATOR
+- **Description**: Symbols used to group or separate elements in the language.
 - **Pattern**: `[(),;]`
-- **Example**:  
-  In `DISPLAY("name", "score", num=2);`, the commas and semicolon are separators.
+- **Examples**: `(`, `)`, `,`, `;`
 
-## 2. Token Summary Table
+### 1.6 STRING
+- **Description**: A sequence of characters enclosed in double quotes, typically representing file paths or text.
+- **Pattern**: `"[^"]*"`
+- **Examples**: `"path/to/file.csv"`, `"hello world"`
+
+---
+
+## 2. Example Code
+
+Here's an example of CSVLang code:
+
+```plaintext
+LOAD("path/to/file.csv", header=true);
+DISPLAY("name", "score", num=2);
+```
+
+## 3. Token Summary Table
 
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
