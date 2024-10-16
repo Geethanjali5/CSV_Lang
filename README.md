@@ -85,6 +85,11 @@ This document outlines the lexical grammar for **CSVLang**, a language used for 
 - **Pattern**: `"[^"]*"`
 - **Examples**: `"path/to/file.csv"`, `"hello world"`
 
+### 1.7 IDENTIFIER
+- **Description**: Identifiers are user-defined names for variables, functions, or columns in CSV files.
+- **Pattern**: `[a-zA-Z_][a-zA-Z0-9_]*`
+- **Examples**: `name`, `score`, `header`
+
 ---
 
 ## 2. Example Code
