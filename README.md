@@ -48,11 +48,6 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
 
-
-# CSVLang Lexical Grammar
-
-This document outlines the lexical grammar for **CSVLang**, a language used for performing operations on CSV files. Below are the token types, patterns, and examples used in the language.
-
 ## 1. Token Types
 
 ### 1.1 KEYWORD
