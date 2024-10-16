@@ -65,6 +65,72 @@ Geethanjali, 86
 The average score: 77.67
 
 
+# CSVLang Lexical Grammar
+
+This document outlines the lexical grammar for **CSVLang**, a language designed for performing SQL-like operations on CSV files. The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
+
+## 1. Token Types
+
+**CSVLang** recognizes the following token types:
+
+### 1.1 COMMAND
+- **Description**: Commands that perform specific operations like loading or displaying CSV files.
+- **Pattern**: `LOAD|DISPLAY|STORE|MERGE|INSERT|DELETE|UPDATE`
+- **Example**:  
+  In `LOAD("path/to/file.csv", header=true);`, the token `LOAD` is a command that triggers the loading of a CSV file.
+
+### 1.2 STRING_LITERAL
+- **Description**: A sequence of characters enclosed in double quotes, representing file paths or text values.
+- **Pattern**: `\"[^\"]*\"`
+- **Example**:  
+  In `LOAD("path/to/file.csv", header=true);`, `"path/to/file.csv"` is a string literal representing the file path.
+
+### 1.3 IDENTIFIER
+- **Description**: Represents column names or variable names in CSVLang.
+- **Pattern**: `[a-zA-Z_][a-zA-Z0-9_]*`
+- **Example**:  
+  In `DISPLAY("name", "score", num=2);`, `name`, `score`, and `num` are all identifiers.
+
+### 1.4 INTLITERAL (Integer Literal)
+- **Description**: A sequence of digits representing an integer.
+- **Pattern**: `[0-9]+`
+- **Example**:  
+  In `num=2`, `2` is an integer literal that specifies the number of rows to display.
+
+### 1.5 OPERATOR
+- **Description**: Symbols used to assign or compare values.
+- **Pattern**: `[=+*/<>-]`
+- **Example**:  
+  In `header=true`, the `=` symbol is an operator that assigns the value `true` to `header`.
+
+### 1.6 SEPARATOR
+- **Description**: Symbols used for grouping and separating values in the program.
+- **Pattern**: `[(),;]`
+- **Example**:  
+  In `DISPLAY("name", "score", num=2);`, the commas and semicolon are separators.
+
+## 2. Token Summary Table
+
+| Token Type       | Pattern                       | Examples                                |
+|------------------|-------------------------------|-----------------------------------------|
+| **COMMAND**      | `LOAD|DISPLAY|STORE|...`      | `LOAD`, `DISPLAY`, `MERGE`              |
+| **STRING_LITERAL**| `\"[^\"]*\"`                 | `"file.csv"`, `"average score"`         |
+| **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`      | `name`, `score`, `header`               |
+| **INTLITERAL**   | `[0-9]+`                      | `2`, `100`, `10`                        |
+| **OPERATOR**     | `[=+*/<>-]`                   | `=`, `+`, `-`, `<`, `>`                 |
+| **SEPARATOR**    | `[(),;]`                      | `(`, `)`, `,`, `;`                      |
+
+## 3. Sample Tokenization
+
+Let’s look at a simple CSVLang code example and how the tokens will be categorized:
+
+### Example CSVLang Code:
+```plaintext
+LOAD("path/to/file.csv", header=true);
+DISPLAY("name", "score", num=2);
+
+
+
 ## Final Thoughts
 
 With **CSVLang**, working with CSV files has never been easier. By abstracting away the complexity of traditional CSV manipulation tools and offering a SQL-like interface, CSVLang allows users to focus on data insights rather than tedious coding tasks. Whether you're cleaning data, generating reports, or performing complex transformations, CSVLang ensures that your workflow is both efficient and intuitive.
