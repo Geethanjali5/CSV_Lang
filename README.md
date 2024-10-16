@@ -100,10 +100,10 @@ DISPLAY("name", "score", num=2);
 
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
-| **COMMAND**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
-| **STRING_LITERAL**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
+| **KEYWORD**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
+| **STRING**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
 | **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`| `name`, `score`, `header`               |
-| **INTLITERAL**   | `[0-9]+`                | `2`, `100`, `10`                        |
+| **LITERAL**   | `[0-9]+`                | `2`, `100`, `10`                        |
 | **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
 | **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
 
