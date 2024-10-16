@@ -93,7 +93,7 @@ The language recognizes a variety of tokens that form the core structure of vali
 | Token Type       | Pattern                | Examples                                |
 |------------------|------------------------|-----------------------------------------|
 | **KEYWORD**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
-| **LITERAL**   | `TRUE`, 'FALSE'                |         `TRUE`, 'FALSE'                |
+| **LITERAL**   | TRUE|FALSE                |         `TRUE`, 'FALSE'                |
 | **NUMBER**   | `[0-9]+`                | `2`, `100`, `10`                        |
 | **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
 | **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
