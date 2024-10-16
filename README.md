@@ -102,7 +102,7 @@ DISPLAY("name", "score", num=2);
 |------------------|------------------------|-----------------------------------------|
 | **KEYWORD**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
 | **STRING**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
-| **IDENTIFIER**   | `[a-zA-Z_][a-zA-Z0-9_]*`| `name`, `score`, `header`               |
+| **IDENTIFIER**   | `[a-z A-Z_][a-z A-Z 0-9]*`| `name`, `score`, `header`               |
 | **LITERAL**   | `[0-9]+`                | `2`, `100`, `10`                        |
 | **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
 | **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
