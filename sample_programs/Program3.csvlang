@@ -1,0 +1,8 @@
+LOAD ("/Users/abhishekpaul/Desktop/sales.csv", header = true);
+
+DISPLAY ("goods", "sales", header = true, sort = ("goods"));
+DISPLAY ("goods", "sales", header = true, filter = ("sales" >= 10 & "goods" = "Paper"));
+
+PRINT ("The maximum sales: ", MAX1("sales"));@
+PRINT ("The minimum sales: ", MIN("sales"));
+PRINT ("The total number of goods: ", COUNT("goods));
