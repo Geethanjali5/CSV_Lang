@@ -1,0 +1,7 @@
+LOAD ("/Users/abhishekpaul/Desktop/sales.csv", header = true, tag = "batch1");
+LOAD ("/Users/abhishekpaul/Desktop/sales.csv", header = true, tag = "batch2");
+
+MERGE ("batch1", "batch2", save = true, path = "/Users/abhishekpaul/Desktop/combined_sales.csv");
+
+PRINT ("The total sales of batch 1: ", SUM("sales"));
+PRINT ("The total sales of batch 2: ", SUM("sales"));
