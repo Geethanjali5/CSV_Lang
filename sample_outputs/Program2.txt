@@ -1,62 +1,9 @@
-TOKENS
-< keyword, LOAD >
-< separator, ( >
-< string, "/Users/abhishekpaul/Desktop/sales.csv" >
-< separator, , >
-< keyword, header >
-< operator, = >
-< literal, true >
-< separator, , >
-< keyword, tag >
-< operator, = >
-< string, "batch1" >
-< separator, ) >
-< separator, ; >
-< keyword, LOAD >
-< separator, ( >
-< string, "/Users/abhishekpaul/Desktop/sales.csv" >
-< separator, , >
-< keyword, header >
-< operator, = >
-< literal, true >
-< separator, , >
-< keyword, tag >
-< operator, = >
-< string, "batch2" >
-< separator, ) >
-< separator, ; >
-< keyword, MERGE >
-< separator, ( >
-< string, "batch1" >
-< separator, , >
-< string, "batch2" >
-< separator, , >
-< keyword, save >
-< operator, = >
-< literal, true >
-< separator, , >
-< keyword, path >
-< operator, = >
-< string, "/Users/abhishekpaul/Desktop/combined_sales.csv" >
-< separator, ) >
-< separator, ; >
-< keyword, PRINT >
-< separator, ( >
-< string, "The total sales of batch 1: " >
-< separator, , >
-< keyword, SUM >
-< separator, ( >
-< string, "sales" >
-< separator, ) >
-< separator, ) >
-< separator, ; >
-< keyword, PRINT >
-< separator, ( >
-< string, "The total sales of batch 2: " >
-< separator, , >
-< keyword, SUM >
-< separator, ( >
-< string, "sales" >
-< separator, ) >
-< separator, ) >
-< separator, ; >
+goods,date,sales
+Bread,10-10-24,40
+Eggs,10-9-24,34
+Milk,9-9-24,45
+Shelf,10-8-24,30
+Chair,10-9-24,44
+
+The total sales of Batch 1: 119
+The total sales of Batch 2: 74
