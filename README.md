@@ -4,7 +4,8 @@
 
 ## Why CSVLang?
 
-CSVLang empowers you to manipulate CSV files using intuitive, SQL-like commands. Forget about tedious loops or complex logic! With **simple, one-line commands** like `SELECT` and `MERGE`, you can effortlessly:
+CSVLang empowers you to manipulate CSV files using intuitive, SQL-like commands. Forget about tedious loops or 
+complex logic! With **simple, one-line commands** like `DISPLAY` and `MERGE`, you can effortlessly:
 - Select and filter rows.
 - Perform mathematical transformations on columns.
 - Merge multiple CSV files into a unified dataset.
@@ -16,7 +17,7 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 ## **Key Features**
 
-**No Dependencies**: Works directly without the need for external libraries—no pandas, no csv modules, just CSVLang.
+**No Dependencies**: Works directly without the need for external libraries — no pandas, no csv modules, just CSVLang.
 
 **CRUD Operations**: Perform all standard CRUD operations on CSV files with streamlined, SQL-inspired commands.
 
@@ -30,7 +31,7 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 ---
 
-## **Why Choose CSVLang Over Traditional Methods?**
+## **Novelty**
 
 **Python (Pandas) vs CSVLang**:
 - Pandas is a powerful tool, but it comes with a learning curve and additional overhead. CSVLang, on the other hand, allows you to:
@@ -48,62 +49,59 @@ CSVLang is **designed for simplicity** and **optimized for efficiency**, making 
 
 The language recognizes a variety of tokens that form the core structure of valid CSVLang programs.
 
-## 1. Token Types
+## Token Classes (in order of priority)
 
-### 1.1 KEYWORD
-- **Description**: Reserved words that perform specific actions in CSVLang.
-- **Pattern**: `LOAD|CREATE|ADD|REMOVE|DELETE|DISPLAY|STORE|MERGE|AVERAGE|SUM|MAX|MIN|COUNT|PRINT|save|num|sort|filter|tag|path|header`
+### KEYWORD
+- **Description**: Reserved words that perform specific actions in CSVLang. All keywords are case-sensitive.
+- **Regex**: `LOAD|CREATE|ADD|REMOVE|DELETE|DISPLAY|STORE|MERGE|AVERAGE|SUM|MAX|MIN|COUNT|PRINT|save|num|sort|filter|tag|path|header`
 - **Examples**: `LOAD`, `DISPLAY`, `STORE`
 
-### 1.2 LITERAL
-- **Description**: Boolean literals that represent `true` or `false`.
-- **Pattern**: `true|false`
+### LITERAL
+- **Description**: Boolean literals that represent `true` or `false`. All literals are case-sensitive.
+- **Regex**: `true|false`
 - **Examples**: `true`, `false`
 
-### 1.3 NUMBER
-- **Description**: A sequence of digits representing an integer.
-- **Pattern**: `[0-9]+`
-- **Examples**: `123`, `456`
+### NUMBER
+- **Description**: The set of whole numbers.
+- **Regex**: `(0 | [1-9][0-9]*)`
+- **Examples**: `123`, `456`, `0`, `10`
 
-### 1.4 OPERATOR
+### OPERATOR
 - **Description**: Symbols used for arithmetic, logical, or comparison operations.
-- **Pattern**: `[\+\-\*/%=&|<>]|<=|>=|<>`
+- **Regex**: `[+-*/%=&|<>]|<=|>=|<>`
 - **Examples**: `+`, `-`, `*`, `/`, `=`, `<=`, `>=`, `<>`
 
-### 1.5 SEPARATOR
-- **Description**: Symbols used to group or separate elements in the language.
-- **Pattern**: `[(),;]`
+### SEPARATOR
+- **Description**: Symbols used to group or separate elements in the language. Semicolon (`;`) is used to separate 
+  different lines of code.
+- **Regex**: `[(),;]`
 - **Examples**: `(`, `)`, `,`, `;`
 
-### 1.6 STRING
+### STRING
 - **Description**: A sequence of characters enclosed in double quotes, typically representing file paths or text.
-- **Pattern**: `"[^"]*"`
+- **Regex**: `"[^"]*"`
 - **Examples**: `"path/to/file.csv"`, `"hello world"`
 
-### 1.7 IDENTIFIER
-- **Description**: Identifiers are user-defined names for variables, functions, or columns in CSV files.
-- **Pattern**: `[a-z A-Z_][a-z A-Z 0-9]*`
-- **Examples**: `name`, `score`, `header`
+Note: Whitespaces are ignored by our language.
 
 ---
 
 
 ## Token Summary Table
 
-| Token Type       | Pattern                | Examples                                |
-|------------------|------------------------|-----------------------------------------|
-| **KEYWORD**      | `LOAD`, `DISPLAY`, ...  | `LOAD`, `DISPLAY`, `MERGE`              |
-| **LITERAL**   | `TRUE\|FALSE`         | `TRUE`, `FALSE` |
-| **NUMBER**   | `[0-9]+`                | `2`, `100`, `10`                        |
-| **OPERATOR**     | `[=+*/<>-]`             | `=`, `+`, `-`, `<`, `>`                 |
-| **SEPARATOR**    | `[(),;]`                | `(`, `)`, `,`, `;`                      |
-| **STRING**| `"[^\"]*"`             | `"file.csv"`, `"average score"`         |
-| **IDENTIFIER**   | `[a-z A-Z_][a-z A-Z 0-9]*`| `name`, `score`, `header`               |
+| Token Class   | Regex                                                                                                                                                                                | Examples                        |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
+| **KEYWORD**   | `LOAD \| CREATE \| ADD \| REMOVE \| DELETE \| DISPLAY \| STORE \| MERGE \| AVERAGE \| SUM \| MAX \| MIN \| COUNT \| PRINT \| save \| num \| sort \| filter \| tag \| path \| header` | `LOAD`, `DISPLAY`, `MERGE`      |
+| **LITERAL**   | `true \| false`                                                                                                                                                                      | `true`, `false`                 |
+| **NUMBER**    | `(0 \| [1-9][0-9]*)`                                                                                                                                                                 | `2`, `100`, `0`                 |
+| **OPERATOR**  | `[+-*/%=&\|<>] \| <= \| >= \| <>`                                                                                                                                                    | `=`, `+`, `-`, `<=`, `<>`       |
+| **SEPARATOR** | `[(),;]`                                                                                                                                                                             | `(`, `)`, `,`, `;`              |
+| **STRING**    | `"[^\"]*"`                                                                                                                                                                           | `"file.csv"`, `"average score"` |
 
 
 
 
-## 2. Example CSVLang and Tokens
+## Example CSVLang and Tokens
 
 Let’s look at a simple CSVLang code example and how the tokens will be categorized:
 
@@ -115,126 +113,270 @@ DISPLAY("name", "score", num=2);
 
 ### Tokenized Output:
 
-| Lexeme             | Token Type      |
-|--------------------|-----------------|
-| LOAD               | KEYWORD         |
-| (                  | SEPARATOR       |
-| "path/to/file.csv"  | STRING  |
-| ,                  | SEPARATOR       |
-| header             | KEYWORD      |
-| =                  | OPERATOR        |
-| true               | LITERAL      |
-| )                  | SEPARATOR       |
-| ;                  | SEPARATOR       |
-| DISPLAY            | KEYWORD         |
-| (                  | SEPARATOR       |
-| "name"             | STRING  |
-| ,                  | SEPARATOR       | 
-| "score"            | STRING  |
-| ,                  | SEPARATOR       |
-| num                | KEYWORD      |
-| =                  | OPERATOR        |
-| 2                  | INTLITERAL      |
-| )                  | SEPARATOR       |
-| ;                  | SEPARATOR       |
+| Lexeme             | Token Class |
+|--------------------|-------------|
+| LOAD               | KEYWORD     |
+| (                  | SEPARATOR   |
+| "path/to/file.csv" | STRING      |
+| ,                  | SEPARATOR   |
+| header             | KEYWORD     |
+| =                  | OPERATOR    |
+| true               | LITERAL     |
+| )                  | SEPARATOR   |
+| ;                  | SEPARATOR   |
+| DISPLAY            | KEYWORD     |
+| (                  | SEPARATOR   |
+| "name"             | STRING      |
+| ,                  | SEPARATOR   | 
+| "score"            | STRING      |
+| ,                  | SEPARATOR   |
+| num                | KEYWORD     |
+| =                  | OPERATOR    |
+| 2                  | NUMBER      |
+| )                  | SEPARATOR   |
+| ;                  | SEPARATOR   |
 
-## 4. CSVLang Lexer
+## CSVLang Lexer
 
-The lexer reads a source file, processes it, and outputs the tokens and errors (if any).
+The lexer reads a source file, processes it, and prints the tokens and errors (if any).
+
+### Input
+A csvlang source file
+
+### Output
+The output is of the following format.
+```bash
+TOKENS
+< token_class, lexeme >
+...
+
+ERRORS
+error type: invalid token
+...
+```
+
+### Execution
+
+You can run this lexer using the following command. Detailed installation and execution steps are given [below](#installation-and-usage).
+
+```bash
+python scanner.py </path/to/file.csv>
+```
+or
+
+```bash
+python3 scanner.py </path/to/file.csv>
+```
+
+### Algorithm
+
+The lexical scanning algorithm starts by reading the text in the input CSVLang source code provided.
+We use a [Deterministic Finite Automata](https://en.wikipedia.org/wiki/Deterministic_finite_automaton) to scan and classify the input into tokens. Whitespaces are ignored and the 
+pointer moves forward. The input is traversed using **state-transitions in the DFA** and there is an **accepting state
+corresponding to each [Token Class](#token-classes-in-order-of-priority)** specified above. There is also an **error state** which reports an error if 
+the 
+input ends up there. However, the lexer is capable of handling it successfully by reporting the error category to the user 
+and proceeding with the rest of the code.
+
+#### Accepting States
+
+1. **Keyword / Literal**: If the current character is a letter, the scanner keeps moving forward appending 
+   every character to a temporary variable called lexeme as long as it keeps encountering a letter. It stops when it 
+   gets something other than a letter. At this point, it compares the lexeme against the set of known keywords and literals. If a match is found, it 
+   classifies the lexeme accordingly, else it reports an error.
+2. **Number**: If the current character is a digit, the scanner keeps moving forward appending 
+   every character to a temporary variable called lexeme as long as its a digit. It stops when it gets something other 
+   than a digit. At this point, it checks if lexeme is `0` or any other number without a leading 0, if that is the 
+   case it classifies it as a number else it reports an error.
+3. **Operator**: If the current character belongs to the list of operators and is one of `<` or `>`, the scanner 
+   **looks ahead** to check the next character. If the first character is `<` and the next character happens to be `>` or `=`,
+   or if the first character is `>` and the next character happens to be `=`, the scanner classifies both the characters as a 
+   operator else only the first character.
+4. **Separator**: If the current character belongs to the list of separators, then it is classified as a separator.
+5. **String**: If the current character is a `"`, the scanner keeps moving forward appending 
+   every character to a temporary variable called lexeme. It stops when it 
+   gets another `"` or reaches the end of file. If the closing `"` is reached before the end of file, it classifies 
+   the lexeme as a string, else it reports an error.
+
+#### Error States
+
+The following inputs end up in error states.
+
+1. A mismatched keyword / literal.
+2. A number with leading zero(s).
+3. A string without an ending `"`.
+4. Any other character which does not fit any of the [lexical specifications](#token-summary-table) given above.
+
+### Test Cases
+
+You can run the [unit test file](test.py) that checks the scanner against some [Sample Programs](#sample-programs) using the 
+following command.
+
+```bash
+python test.py
+```
+
+or 
+
+```bash
+python3 test.py
+```
+
+### Error Handling
+
+There are 4 kinds of errors the lexer can detect.
+1. Invalid keyword / literal: If the code contains a keyword or literal unrecognised by the grammar.
+2. Invalid number with leading zero(s): If a number starts with a leading `0` (except the number `0` itself)
+3. Unclosed string: If a string is not properly enclosed in double quotes (`"`).
+4. Unrecognised character: If any character in the source code is not matched by any of the [lexical specifications](#token-summary-table)
+   mentioned above.
+
+The lexer has capabilities of reporting the error gracefully with a suitable message and proceeding with the rest of 
+the code smoothly.
+
+## [Sample Programs](sample_programs)
+
+### Program 1
+This program loads the [student_scores.csv](/csv_files/student_scores.csv) file into the memory and displays the 
+first 2 rows. It also displays the average score and persists the displayed data as a new csv file into the memory 
+called [student_scores_new.csv](/csv_files/student_scores_new.csv)
+
+[Source Code](sample_programs/Program1.csvlang)<br>
+[Lexical Output](lexical_outputs/Program1.txt)<br>
+[Program Output](sample_outputs/Program1.txt)
+
+### Program 2
+This program loads the [sales.csv](/csv_files/sales.csv) and [sales1.csv]() files into the memory and tags them as 
+batch1 and batch2 respectively. It merges the two files and displays the combined data and also persists it as a new 
+file in memory called [combined_sales.csv](/csv_files/combined_sales.csv). It also prints the total sales of batch 1 and batch 2.
+
+[Source Code](sample_programs/Program2.csvlang)<br>
+[Lexical Output](lexical_outputs/Program2.txt)<br>
+[Program Output](sample_outputs/Program2.txt)
+
+### Program 3
+This program loads the [sales.csv](/csv_files/sales.csv) file into the memory. It then displays the data after sorting 
+goods lexicographically, and proceeds to display all Paper sales which are more than 10. It also displays the 
+maximum sales, minimum sales, and the count of unique goods. However, this does not compile owing to some lexical 
+errors such as invalid number 02, invalid keyword MAXIMUM, unrecognised character @ and an unclosed string.
+
+[Source Code](sample_programs/Program3.csvlang)<br>
+[Lexical Output](lexical_outputs/Program3.txt)<br>
+Program Output: No output produced as there is a lexical error
+
+### Program 4
+This program loads the [student_scores.csv](/csv_files/student_scores.csv) file into the memory and then proceeds to 
+delete it. It creates a new file with the same name and adds a few records in it. Finally, it aims to display goods 
+and sales from the new table after incrementing sales by 10. However, this does not compile owing to the lexical 
+error of invalid literal True (which is case-sensitive).
+
+[Source Code](sample_programs/Program4.csvlang)<br>
+[Lexical Output](lexical_outputs/Program4.txt)<br>
+Program Output: No output produced as there is a lexical error
+
+### Program 5
+This program loads the [matrix.csv](/csv_files/matrix.csv) file into the memory and removes a row from it. It then 
+proceeds to display all records of three columns in the file.
+
+[Source Code](sample_programs/Program5.csvlang)<br>
+[Lexical Output](lexical_outputs/Program5.txt)<br>
+[Program Output](sample_outputs/Program5.txt)
+
 
 ## Installation and Usage
 
-### 1. Requirements
-- Python 3.x installed on your machine.
+### Requirements
+- [Python 3.x](https://www.python.org/) installed on your machine.
 - A source file containing **CSVLang** code (e.g., `test.csvlang`).
 
-### 2. Installation Steps
-1. Clone or download the repository containing `scanner.py` and `run_scanner.sh`.
-2. Ensure you have Python 3 installed. You can check this by running:
+### Installation Steps
+1. Clone or download this repository.
+    ```bash
+   git clone https://github.com/Geethanjali5/CSV_Lang.git
+   ```
+
+2. If Python 3 is not installed, download it from [python.org](https://www.python.org/downloads/) manually. Or, you 
+   can use the following commands.
+
+   #### MacOS
+   If [Homebrew](https://brew.sh/) is not installed, then install it with the following command.
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+   Install Python via Homebrew
+   ```bash
+   brew install python3
+   ```
+   
+   #### Linux
+   ```bash
+   sudo apt update
+   sudo apt install -y python3 python3-pip
+   ```
+   
+   #### Windows (PowerShell)
+   ```bash
+   # Download the Python installer
+   Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe -OutFile python_installer.exe
+    
+   # Install Python silently with default options and add it to PATH
+   Start-Process python_installer.exe -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1' -Wait
+    
+   # Clean up the installer
+   Remove-Item python_installer.exe
+   ```
+   
+3. Ensure Python has been successfully installed. You can check this by running the following command in Windows:
+   ```bash
+   python --version
+   ```
+   
+   or (on Linux or Mac),
+   
    ```bash
    python3 --version
    ```
 
-If Python 3 is not installed, download it from [python.org](https://www.python.org/downloads/)
-.
+Alternatively, you can also run the pre-existing [shell scripts](shell_scripts) which take care of the installations.
 
-3. Make the shell script executable: You need to make the run_lexer.sh script executable before you can run it. Use the following command:
+[run_tests.sh](shell_scripts/run_tests.sh): It runs all the test cases. <br>
+[run_lexer.sh](shell_scripts/run_tests.sh): It performs lexical analysis on a csvlang file which is passed as an 
+argument. <br>
+[run_sample_programs.sh](shell_scripts/run_tests.sh): It performs lexical analysis and displays the outputs of 
+   all the [Sample Programs](sample_programs).
+
+
+1. Navigate to the [shell_scripts](shell_scripts) folder.
    ```bash
+   cd shell_scripts
+   ```
+2. Run the following commands to make it executable.
+   ```bash
+   chmod +x run_tests.sh
    chmod +x run_lexer.sh
+   chmod +x run_sample_programs.sh
    ```
-4. Prepare a CSVLang source file: The lexer processes files containing CSVLang code. You can create a test file, e.g., test.csvlang, with content like this:
-   ```plaintext 
-   LOAD("path/to/file.csv", header=true);
-   DISPLAY("name", "score", num=2);
-   ```
-### 3. Running the Shell Script
-
-The shell script `run_lexer.sh` automates running the lexer. Here's how to use it:
-
-### Step-by-Step Instructions:
-
-1. **Run the shell script**: Provide the CSVLang source file as an argument to the shell script:
-
+3. Run the shell scripts using the following commands.
    ```bash
-   ./run_lexer.sh test.csvlang
+   ./run_tests.sh
    ```
-   
-2. **Output**: The lexer will output the tokens found in the source file and any lexical errors (if applicable).
-
-3. **Shell Script (run_lexer.sh)**:
-The shell script is used to execute the scanner.py file. Below is the content of the script:
-```bash
-#!/bin/bash
-
-# Check if a file is provided as an argument
-if [ $# -eq 0 ]; then
-    echo "No source code file provided. Usage: ./run_lexer.sh <source_code_file>"
-    exit 1
-fi
-
-# Store the provided file argument
-file=$1
-
-# Check if the file exists
-if [ ! -f "$file" ]; then
-    echo "File '$file' not found."
-    exit 1
-fi
-
-# Execute the lexer Python script
-python3 scanner.py "$file"
-```
-**Notes**
-Ensure that both the run_lexer.sh script and scanner.py file are in the same directory.
-
-The lexer will print out tokens in the format <Token Type, Token Value>, and will report any errors it encounters.
-
-
-### How to Use:
-- The shell script will run `scanner.py` to tokenize and process CSVLang code files.
-- The instructions above are written assuming the lexer code is stored in `scanner.py` and can be executed via a shell script.
-
-
-
-## Final Thoughts
-
-With **CSVLang**, working with CSV files has never been easier. By abstracting away the complexity of traditional CSV manipulation tools and offering a SQL-like interface, CSVLang allows users to focus on data insights rather than tedious coding tasks. Whether you're cleaning data, generating reports, or performing complex transformations, CSVLang ensures that your workflow is both efficient and intuitive.
-
-Feel free to explore the project, test it with your own CSV files, and make contributions to improve and extend its functionality. We’re always open to suggestions and new ideas!
-
----
+   ```bash
+   ./run_lexer.sh <path/to/test.csvlang>
+   ```
+   ```bash
+   ./run_sample_programs.sh
+   ```
 
 ## Contribution
 **Teammates**:  
-1. Geethanjali P [UNI: gp2755]  
-2. Abhishek Paul [UNI: ap4623]
-
+1. Geethanjali P (UNI: gp2755)
+2. Abhishek Paul (UNI: ap4623)
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE.txt) file for more details.
 
 ---
 
