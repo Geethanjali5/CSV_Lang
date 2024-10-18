@@ -1,7 +1,7 @@
 TOKENS
 < keyword, LOAD >
 < separator, ( >
-< string, "/Users/abhishekpaul/Desktop/sales.csv" >
+< string, "../csv_files/sales.csv" >
 < separator, , >
 < keyword, header >
 < operator, = >
@@ -13,6 +13,9 @@ TOKENS
 < string, "goods" >
 < separator, , >
 < string, "sales" >
+< separator, , >
+< keyword, num >
+< operator, = >
 < separator, , >
 < keyword, header >
 < operator, = >
@@ -75,6 +78,7 @@ TOKENS
 < separator, ( >
 
 ERRORS
-Invalid keyword or literal: MAX1
+Invalid number with leading zero(s): 02
+Invalid keyword or literal: MAXIMUM
 Unrecognized character: @
 Unclosed string: "goods));

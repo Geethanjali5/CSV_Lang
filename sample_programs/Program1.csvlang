@@ -1,4 +1,4 @@
-LOAD ("/Users/abhishekpaul/Desktop/student_scores.csv", header = true);
-DISPLAY ("name", "score", num=2, header = false);
-STORE ("name", "score", num=2, header = false, path = "/Users/abhishekpaul/Desktop/student_scores_new.csv");
+LOAD ("../csv_files/student_scores.csv", header = true);
+DISPLAY ("name", "score", num=2, header = true);
+STORE ("name", "score", num=2, header = true, path = "../csv_files/student_scores_new.csv");
 PRINT ("The average score: ", AVERAGE("score"));

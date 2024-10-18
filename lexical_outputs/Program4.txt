@@ -1,7 +1,7 @@
 TOKENS
 < keyword, LOAD >
 < separator, ( >
-< string, "/Users/abhishekpaul/Desktop/sales.csv" >
+< string, "../csv_files/sales.csv" >
 < separator, , >
 < keyword, header >
 < operator, = >
@@ -21,7 +21,7 @@ TOKENS
 < separator, ; >
 < keyword, CREATE >
 < separator, ( >
-< string, "/Users/abhishekpaul/Desktop/sales.csv" >
+< string, "../csv_files/sales.csv" >
 < separator, ) >
 < separator, ; >
 < keyword, ADD >
