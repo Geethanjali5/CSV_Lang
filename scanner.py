@@ -53,7 +53,7 @@ def scanner(program):
             i += 1
 
             # State transitions
-            while i < length and (is_letter(program[i]) or is_digit(program[i])):
+            while i < length and is_letter(program[i]):
                 lexeme += program[i]
                 i += 1
             if is_keyword(lexeme):
@@ -72,7 +72,12 @@ def scanner(program):
             while i < length and is_digit(program[i]):
                 lexeme += program[i]
                 i += 1
-            tokens.append((token_classes["NUMBER"], lexeme)) # accepting state
+
+            # Check for leading zeros
+            if lexeme != "0" and lexeme[0] == '0':
+                errors.append(f"Invalid number with leading zero(s): {lexeme}")
+            else:
+                tokens.append((token_classes["NUMBER"], lexeme))  # accepting state
 
         # Check for operator
         elif is_operator(current_char):
