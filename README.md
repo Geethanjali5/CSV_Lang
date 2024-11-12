@@ -494,7 +494,7 @@ The grammar would parse this input as follows:
    - Match the keyword `LOAD`.
    - Parse `(` and `"file.csv"` as `<path>`.
    - Optionally parse `header="true"` as part of `<optional_attribute_list>`.
-   - End with `)` and `;`.
+   - End with `)` and `:`.
    
    This will generate an AST node of type `LOAD-STMT` with children nodes representing the path and the attribute.
 
@@ -502,7 +502,7 @@ The grammar would parse this input as follows:
    - Match the keyword `DISPLAY`.
    - Parse `(` and `"column1"` as part of `<column_or_index_list>`.
    - Optionally parse `num=5` as an attribute.
-   - End with `)` and `;`.
+   - End with `)` and `:`.
 
 ## Summary
 - The **CFG** describes how the tokens produced by the lexical analyzer can be combined to create valid CSVLang commands.
