@@ -367,6 +367,152 @@ argument. <br>
    ./run_sample_programs.sh
    ```
 
+
+
+
+***Assignment 2***
+
+# Context-Free Grammar (CFG) for CSVLang
+
+This document describes the **Context-Free Grammar (CFG)** for CSVLang, a custom language designed to manipulate CSV files using a set of intuitive commands. The CFG defines the rules for forming valid commands and operations in CSVLang.
+
+## Terminals and Non-Terminals
+In the CFG, **terminals** are symbols representing actual content (keywords, symbols, literals), while **non-terminals** represent the abstract structure of the language.
+
+### Terminals
+- **Keywords**: `LOAD`, `DISPLAY`, `STORE`, `PRINT`, `MERGE`, `DELETE`, `CREATE`, `ADD`, `REMOVE`, `header`, `num`, `sort`, `filter`, `tag`, `save`, etc.
+- **Operators**: Symbols like `=`, `<`, `>`, `<=`, `>=`, `!=`, etc.
+- **Separators**: Symbols like `(`, `)`, `,`, `;`.
+- **Types**: `number`, `string`, `literal` (e.g., `true`, `false`).
+
+### Non-Terminals
+- **`<program>`**: Represents the entire set of commands.
+- **`<statement>`**: Represents individual commands.
+- **`<attribute_list>`**: Represents a list of attributes.
+- **`<condition>`**: Represents a condition for filtering data.
+- **`<expression>`**: Represents an arithmetic or logical expression.
+- **`<tuple>`**: Represents a group of values.
+- **`<number_list>`** and **`<column_list>`**: Represents lists of numbers and column names, respectively.
+
+## Grammar Rules
+Below is the CFG that represents the CSVLang language grammar.
+
+### 1. Program Rules
+The `<program>` represents a collection of statements, each ending with a semicolon:
+```
+<program> → <statement> ";"
+          | <statement> ";" <program>
+```
+This means a program consists of one or more statements, with each statement ending in a `;`.
+
+### 2. Statement Rules
+Statements represent individual operations that the CSVLang language can perform:
+```
+<statement> → "LOAD" "(" <path> <optional_attribute_list> ")"
+            | "DISPLAY" "(" <column_or_index_list> <optional_attribute_list> ")"
+            | "STORE" "(" <column_or_index_list> <optional_attribute_list> ")"
+            | "PRINT" "(" <message> <optional_aggr_func> <optional_tag> ")"
+            | "MERGE" "(" <tag_list> <optional_attribute_list> ")"
+            | "DELETE" "(" <tag> ")"
+            | "CREATE" "(" <path> ")"
+            | "ADD" <tuple_list>
+            | "REMOVE" <tuple_list>
+```
+The `<statement>` non-terminal defines the valid operations, such as loading a CSV (`LOAD`), displaying columns (`DISPLAY`), or storing data (`STORE`).
+
+### 3. Attributes and Path
+- **Attributes** are options for commands, such as `header`, `path`, or `num`.
+- **Path** is a string value representing a file path.
+```
+<optional_attribute_list> → "," <attribute_list> | ε
+<attribute_list> → <attribute> | <attribute> "," <attribute_list>
+<attribute> → "header" "=" "literal"
+            | "path" "=" "string"
+            | "num" "=" "number"
+            | "sort" "=" "(" <column_or_index_list> ")"
+            | "filter" "=" "(" <condition> ")"
+            | "tag" "=" "string"
+            | "save" "=" "literal"
+```
+
+### 4. Tuples and Tuple List
+Tuples are used for operations like adding or removing rows of data:
+```
+<tuple_list> → "(" <tuple> ")" | "(" <tuple> ")" "," <tuple_list>
+<tuple> → "(" <value_list> ")"
+<value_list> → "string" | "string" "," <value_list>
+```
+
+### 5. Column or Index List
+The `<column_or_index_list>` is used for commands like `DISPLAY` or `STORE` to specify which columns or indices to work with:
+```
+<column_or_index_list> → <column_list> | <number_list>
+<column_list> → "string" | "string" "," <column_list>
+<number_list> → "number" | "number" "," <number_list>
+```
+
+### 6. Conditions and Expressions
+Conditions are used for filtering rows in commands such as `filter`:
+```
+<condition> → <expression> <operator> <expression>
+            | <condition> "&" <condition>
+            | <condition> "|" <condition>
+
+<expression> → "string" | "number" | "(" <condition> ")"
+<operator> → "=" | "<" | ">" | "<=" | ">=" | "!="
+```
+Conditions can be combined using logical operators `&` (AND) and `|` (OR).
+
+
+### 7. Aggregate Functions
+For commands like `PRINT`, aggregate functions such as `SUM`, `AVERAGE`, etc., can be specified:
+```
+<optional_aggr_func> → "," <aggr_func> | ε
+<aggr_func> → "SUM" "(" "string" ")"
+            | "AVERAGE" "(" "string" ")"
+            | "MAX" "(" "string" ")"
+            | "MIN" "(" "string" ")"
+            | "COUNT" "(" "string" ")"
+```
+
+### 8. Tags
+Tags can be used to mark certain operations:
+```
+<tag_list> → "string" | "string" "," <tag_list>
+<tag> → "string"
+```
+These are used in statements like `MERGE` to specify the data sets to be combined.
+
+## Example Walkthrough
+Suppose you have an input like:
+```
+LOAD("file.csv", header="true");
+DISPLAY("column1", num=5);
+```
+The grammar would parse this input as follows:
+1. **`LOAD("file.csv", header="true")`**:
+   - Match the keyword `LOAD`.
+   - Parse `(` and `"file.csv"` as `<path>`.
+   - Optionally parse `header="true"` as part of `<optional_attribute_list>`.
+   - End with `)` and `;`.
+   
+   This will generate an AST node of type `LOAD-STMT` with children nodes representing the path and the attribute.
+
+2. **`DISPLAY("column1", num=5)`**:
+   - Match the keyword `DISPLAY`.
+   - Parse `(` and `"column1"` as part of `<column_or_index_list>`.
+   - Optionally parse `num=5` as an attribute.
+   - End with `)` and `;`.
+
+## Summary
+- The **CFG** describes how the tokens produced by the lexical analyzer can be combined to create valid CSVLang commands.
+- **Non-terminals** represent the structure, such as `<program>`, `<statement>`, `<attribute_list>`, `<condition>`, etc.
+- **Terminals** represent the actual tokens, such as keywords (`LOAD`, `DISPLAY`), operators (`=`), separators (`(`, `)`), etc.
+- The **parser** follows these grammar rules to generate the **AST**, which is used to understand the structure of the source code and execute the appropriate operations on CSV files.
+
+
+
+
 ## Contribution
 **Teammates**:  
 1. Geethanjali P (UNI: gp2755)
