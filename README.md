@@ -370,11 +370,11 @@ argument. <br>
 
 
 
-***Assignment 2***
+#Assignment 2#
 
 # Context-Free Grammar (CFG) for CSVLang
 
-This document describes the **Context-Free Grammar (CFG)** for CSVLang, a custom language designed to manipulate CSV files using a set of intuitive commands. The CFG defines the rules for forming valid commands and operations in CSVLang.
+**Context-Free Grammar (CFG)** for CSVLang is a custom language designed to manipulate CSV files using a set of intuitive commands. The CFG defines the rules for forming valid commands and operations in CSVLang.
 
 ## Terminals and Non-Terminals
 In the CFG, **terminals** are symbols representing actual content (keywords, symbols, literals), while **non-terminals** represent the abstract structure of the language.
