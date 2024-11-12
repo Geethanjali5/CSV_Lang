@@ -1,0 +1,9 @@
+PROGRAM
+  ├── MERGE-STMT
+        ├── TAG-LIST
+        │     ├── TAG: "tag1"
+        │     ├── TAG: "tag2"
+        ├── SAVE-ATTR
+              ├── save
+              ├── =
+              ├── true
