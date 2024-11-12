@@ -1,0 +1,2 @@
+// Merging with Save Option and Tags
+MERGE("tag1", "tag2", save=true);
