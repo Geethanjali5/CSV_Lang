@@ -1,0 +1,2 @@
+// STORE Command with Path and Filter
+STORE("column1", path="output.csv", filter=(column1>10));
