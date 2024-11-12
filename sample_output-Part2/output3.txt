@@ -1,0 +1,15 @@
+PROGRAM
+  ├── STORE-STMT
+        ├── COLUMN-LIST
+        │     ├── COLUMN: "column1"
+        ├── PATH-ATTR
+        │     ├── path
+        │     ├── =
+        │     ├── "output.csv"
+        ├── FILTER-ATTR
+              ├── filter
+              ├── =
+              ├── CONDITION
+                    ├── COLUMN: "column1"
+                    ├── OPERATOR: ">"
+                    ├── NUMBER: 10
