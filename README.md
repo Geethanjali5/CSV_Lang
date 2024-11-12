@@ -510,6 +510,45 @@ The grammar would parse this input as follows:
 - **Terminals** represent the actual tokens, such as keywords (`LOAD`, `DISPLAY`), operators (`=`), separators (`(`, `)`), etc.
 - The **parser** follows these grammar rules to generate the **AST**, which is used to understand the structure of the source code and execute the appropriate operations on CSV files.
 
+## Sample Input Programs used to test the CSVLang parser - Part 2 
+
+### Program 1: Load and Display Columns
+- **Input**: `LOAD("data.csv", header=true); DISPLAY("column1", num=2);`
+- **Description**: Loads the CSV file `data.csv` with the header set to true, then displays the first two rows of the `column1`.
+- **Expected Output**: A valid AST containing nodes for the `LOAD` and `DISPLAY` statements, with appropriate attributes.
+- **[Source Code](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_programs-Part2/Program1.csvlang)**
+- **[Program Output](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_outputs-Part2/Program1.txt)**
+
+### Program 2: Create and Add Tuples
+- **Input**: `CREATE("new_data.csv"); ADD(("value1", "value2"), ("value3", "value4"));`
+- **Description**: Creates a new CSV file named `new_data.csv` and adds two tuples of data to it.
+- **Expected Output**: An AST containing nodes for the `CREATE` and `ADD` statements, with `ADD` having a child node representing the list of tuples.
+- **[Source Code](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_programs-Part2/Program2.csvlang)**
+- **[Program Output](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_outputs-Part2/Program2.txt)**
+
+### Program 3: Merge Tagged Data
+- **Input**: `MERGE("tag1", "tag2", save=true, path="merged.csv");`
+- **Description**: Merges data sets tagged as `tag1` and `tag2`, saving the merged data to `merged.csv`.
+- **Expected Output**: An AST containing a `MERGE` node with children representing the tags and attributes (`save` and `path`).
+- **[Source Code](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_programs-Part2/Program3.csvlang)**
+- **[Program Output](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_outputs-Part2/Program3.txt)**
+
+### Program 4: Delete and Print
+- **Input**: `DELETE("tag1"); PRINT("Deleted tag1 data");`
+- **Description**: Deletes data tagged as `tag1` and prints a message confirming the deletion.
+- **Expected Output**: An AST containing nodes for the `DELETE` and `PRINT` statements, with `PRINT` having a child representing the message.
+- **[Source Code](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_programs-Part2/Program4.csvlang)**
+- **[Program Output](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_outputs-Part2/Program4.txt)**
+
+
+### Program 5: Error Handling with Missing Separator
+- **Input**: `DELETE("tag1" ADD(("value1", "value2"));`
+- **Description**: Demonstrates error handling by omitting the closing parenthesis for the `DELETE` statement. The parser is expected to identify and report the missing separator.
+- **Expected Output**: A `SyntaxError` indicating that a closing parenthesis was expected but not found.
+- **[Source Code](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_programs-Part2/Program5.csvlang)**
+- **[Program Output](https://github.com/Geethanjali5/CSV_Lang/blob/main/sample_outputs-Part2/Program5.txt)**
+
+
 
 
 
