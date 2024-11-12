@@ -1,2 +1,4 @@
+//Basic LOAD and PRINT Command
+
 LOAD("data.csv", header=true);
 PRINT("Loading completed");
