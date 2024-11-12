@@ -1,0 +1,2 @@
+LOAD("data.csv", header=true);
+PRINT("Loading completed");
