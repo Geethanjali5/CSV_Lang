@@ -365,8 +365,6 @@ class Parser:
         self.expect("separator", "(")
 
         path_node = self.expect("string").to_node('PATH')
-        if path_node is None:
-            raise SyntaxError(f"Path is missing in load statement at line {self.current_line}")
 
         attribute_nodes = []
 
@@ -503,8 +501,6 @@ class Parser:
         self.expect("separator", "(")
 
         path_node = self.expect("string").to_node('PATH')
-        if path_node is None:
-            raise SyntaxError(f"Path is missing in create statement at line {self.current_line}")
 
         self.expect("separator", ")")
         return ASTNode("CREATE-STMT", children=[path_node])
