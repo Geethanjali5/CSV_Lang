@@ -38,6 +38,16 @@ class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
         self.position = 0
+        self.current_line = 1
+        self.is_success = True
+
+    def advance_line(self):
+        self.current_line += 1
+
+    def go_to_next_line(self):
+        while self.current_token() and self.current_token().value != ";":
+            self.advance()
+        self.advance()
 
     def current_token(self):
         if self.position < len(self.tokens):
@@ -69,17 +79,32 @@ class Parser:
             self.advance()
             return token
         else:
-            raise SyntaxError(
-                f"Expected {expected_type}" +
-                (f" {expected_value}" if expected_value is not None else "") +
-                (f", found {token.token_type}: {token.value}" if token else " but found nothing"))
+            if expected_value != ';':
+                raise SyntaxError(
+                    f"Expected {expected_type}" +
+                    (f" {expected_value}" if expected_value is not None else "") +
+                    (f", found {token.token_type} {token.value}" if token else " but found nothing") +
+                    f" at line {self.current_line}"
+                )
+            else:
+                raise SyntaxError(f'Missing semicolon at line {self.current_line}')
 
     def parse_program(self):
         nodes = []
         while self.position < len(self.tokens):
-            node = self.parse_statement()
-            nodes.append(node)
-            self.expect("separator", ";")
+            try:
+                node = self.parse_statement()
+                nodes.append(node)
+                self.expect("separator", ";")
+            except SyntaxError as err:
+                if self.is_success:
+                    self.is_success = False
+                    print(f'\nSyntax Error(s) Found:\n')
+                print(f'{err}')
+                if 'Missing semicolon at' not in str(err):
+                    self.go_to_next_line()
+
+            self.advance_line()
         return ASTNode("PROGRAM", children=nodes)
 
     def parse_statement(self):
@@ -104,9 +129,9 @@ class Parser:
             elif token.value == "REMOVE":
                 return self.parse_remove()
             else:
-                raise SyntaxError(f"Unexpected keyword {token.value}")
+                raise SyntaxError(f"Unexpected keyword {token.value} at line {self.current_line}")
         else:
-            raise SyntaxError(f"Unexpected token {token.token_type} {token.value}")
+            raise SyntaxError(f"Unexpected {token.token_type} {token.value} at line {self.current_line}")
 
     def parse_header(self):
         header_keyword = self.expect("keyword", "header").to_node()
@@ -140,11 +165,11 @@ class Parser:
         if self.current_token().token_type == "string":
             column_node = self.parse_strings_list('COLUMN-LIST', 'COLUMN')
             if column_node is None:
-                raise SyntaxError("missing column list or index list in sort attribute")
+                raise SyntaxError(f"Missing column list or index list in sort attribute at line {self.current_line}")
         else:
             index_node = self.parse_number_list()
             if index_node is None:
-                raise SyntaxError("missing column list or index list in sort attribute")
+                raise SyntaxError(f"Missing column list or index list in sort attribute at line {self.current_line}")
 
         if self.prev_token().token_type == "separator" and self.prev_token().value == ",":
             self.backtrack()
@@ -240,7 +265,7 @@ class Parser:
             option = self.current_token().value
             if "num" in attributes_to_be_checked and option == "num":
                 if 'NUM-ATTR' in attribute_list:
-                    raise SyntaxError('num attribute already exists')
+                    raise SyntaxError(f'Num attribute already exists at line {self.current_line}')
                 else:
                     num_node = self.parse_num()
                     attribute_list.append(num_node.node_type)
@@ -248,7 +273,7 @@ class Parser:
 
             elif "header" in attributes_to_be_checked and option == "header":
                 if 'HEADER-ATTR' in attribute_list:
-                    raise SyntaxError('header attribute already exists')
+                    raise SyntaxError(f'Header attribute already exists at line {self.current_line}')
                 else:
                     header_node = self.parse_header()
                     attribute_list.append(header_node.node_type)
@@ -256,7 +281,7 @@ class Parser:
 
             elif "sort" in attributes_to_be_checked and option == "sort":
                 if 'SORT-ATTR' in attribute_list:
-                    raise SyntaxError('sort attribute already exists')
+                    raise SyntaxError(f'Sort attribute already exists at line {self.current_line}')
                 else:
                     sort_node = self.parse_sort()
                     attribute_list.append(sort_node.node_type)
@@ -264,7 +289,7 @@ class Parser:
 
             elif "filter" in attributes_to_be_checked and option == "filter":
                 if 'FILTER-ATTR' in attribute_list:
-                    raise SyntaxError('filter attribute already exists')
+                    raise SyntaxError(f'Filter attribute already exists at line {self.current_line}')
                 else:
                     filter_node = self.parse_filter()
                     attribute_list.append(filter_node.node_type)
@@ -272,7 +297,7 @@ class Parser:
 
             elif "path" in attributes_to_be_checked and option == 'path':
                 if 'PATH-ATTR' in attribute_list:
-                    raise SyntaxError('path attribute already exists')
+                    raise SyntaxError(f'Path attribute already exists at line {self.current_line}')
                 else:
                     path_node = self.parse_path_attr()
                     attribute_list.append(path_node.node_type)
@@ -280,7 +305,7 @@ class Parser:
 
             elif "tag" in attributes_to_be_checked and option == 'tag':
                 if 'TAG-ATTR' in attribute_list:
-                    raise SyntaxError('tag attribute already exists')
+                    raise SyntaxError(f'Tag attribute already exists at line {self.current_line}')
                 else:
                     tag_node = self.parse_tag()
                     attribute_list.append(tag_node.node_type)
@@ -288,7 +313,7 @@ class Parser:
 
             elif "save" in attributes_to_be_checked and option == 'save':
                 if 'SAVE-ATTR' in attribute_list:
-                    raise SyntaxError('save attribute already exists')
+                    raise SyntaxError(f'Save attribute already exists at line {self.current_line}')
                 else:
                     save_node = self.parse_save()
                     attribute_list.append(save_node.node_type)
@@ -341,7 +366,7 @@ class Parser:
 
         path_node = self.expect("string").to_node('PATH')
         if path_node is None:
-            raise SyntaxError("path is missing in load statement")
+            raise SyntaxError(f"Path is missing in load statement at line {self.current_line}")
 
         attribute_nodes = []
 
@@ -365,11 +390,13 @@ class Parser:
         if self.current_token().token_type == "string":
             column_node = self.parse_strings_list('COLUMN-LIST', 'COLUMN')
             if column_node is None:
-                raise SyntaxError("column list or index list is missing in display statement")
+                raise SyntaxError(f"Column list or index list is missing in display statement at line"
+                                  f" {self.current_line}")
         else:
             index_node = self.parse_number_list()
             if index_node is None:
-                raise SyntaxError("column list or index list is missing in display statement")
+                raise SyntaxError(f"Column list or index list is missing in display statement at line"
+                                  f" {self.current_line}")
 
         if (self.current_token().token_type != "separator" or self.current_token().value != ")")\
             and self.prev_token().value != ",":
@@ -393,11 +420,13 @@ class Parser:
         if self.current_token().token_type == "string":
             column_node = self.parse_strings_list('COLUMN-LIST', 'COLUMN')
             if column_node is None:
-                raise SyntaxError("column list or index list is missing in store statement")
+                raise SyntaxError(f"Column list or index list is missing in store statement at line"
+                                  f" {self.current_line}")
         else:
             index_node = self.parse_number_list()
             if index_node is None:
-                raise SyntaxError("column list or index list is missing in store statement")
+                raise SyntaxError(f"Column list or index list is missing in store statement at line"
+                                  f" {self.current_line}")
 
         if (self.current_token().token_type != "separator" or self.current_token().value != ")")\
             and self.prev_token().value != ",":
@@ -410,7 +439,7 @@ class Parser:
         self.expect("separator", ")")
 
         if 'PATH-ATTR' not in attribute_list:
-            raise SyntaxError("path attribute is missing in store statement")
+            raise SyntaxError(f"Path attribute is missing in store statement at line {self.current_line}")
         return ASTNode("STORE-STMT", children=[column_node or index_node] + attribute_nodes)
 
     def parse_print(self):
@@ -418,8 +447,6 @@ class Parser:
         self.expect("separator", "(")
 
         message_node = self.expect("string").to_node('MESSAGE')
-        if message_node is None:
-            raise SyntaxError("message is missing in print statement")
 
         aggr_func_node = None
         tag_node = None
@@ -443,14 +470,15 @@ class Parser:
 
         tag_list_node = self.parse_strings_list('TAG-LIST', 'TAG')
         if tag_list_node is None:
-            raise SyntaxError("tag list is missing in merge statement")
+            raise SyntaxError(f"Tag list is missing in merge statement at line {self.current_line}")
 
         attribute_list, attribute_nodes = self.parse_attribute_list(['save', 'path'])
 
         for attribute_node in attribute_nodes:
             if attribute_node.node_type == 'SAVE-ATTR' and attribute_node.children[2].value == 'true' and 'PATH-ATTR'\
                     not in attribute_list:
-                raise SyntaxError("path attribute is missing in merge statement with save=true")
+                raise SyntaxError(f"Path attribute is missing in merge statement with save=true at line"
+                                  f" {self.current_line}")
 
         if self.prev_token().token_type == "separator" and self.prev_token().value == ",":
             self.backtrack()
@@ -464,7 +492,7 @@ class Parser:
 
         tag_node = self.parse_tag()
         if tag_node is None:
-            raise SyntaxError("tag is missing in delete statement")
+            raise SyntaxError(f"Tag is missing in delete statement at line {self.current_line}")
 
         self.expect("separator", ")")
 
@@ -476,7 +504,7 @@ class Parser:
 
         path_node = self.expect("string").to_node('PATH')
         if path_node is None:
-            raise SyntaxError("path is missing in create statement")
+            raise SyntaxError(f"Path is missing in create statement at line {self.current_line}")
 
         self.expect("separator", ")")
         return ASTNode("CREATE-STMT", children=[path_node])
@@ -495,9 +523,17 @@ class Parser:
         expected_values = ['SUM', 'AVERAGE', 'MAX', 'MIN', 'COUNT']
         value = self.expect("keyword", expected_values).value
         self.expect("separator", "(")
-        column_node = self.expect("string").to_node('COLUMN')
+
+        if self.current_token().token_type == "string":
+            parameter_node = self.expect("string").to_node('COLUMN')
+        elif self.current_token().token_type == "number":
+            parameter_node = self.expect("number").to_node('COL-INDEX')
+        else:
+            raise SyntaxError(f"Aggregate function should have a column name or a column index"
+                              f" as the parameter at line {self.current_line}")
+
         self.expect("separator", ")")
-        return ASTNode("AGGR-FUNC", value=value, children=[column_node])
+        return ASTNode("AGGR-FUNC", value=value, children=[parameter_node])
 
     def parse_expression(self):
         token = self.current_token()
@@ -514,7 +550,7 @@ class Parser:
             self.expect("separator", ")")
             return expr
         else:
-            raise SyntaxError(f"Unexpected token in expression: {token}")
+            raise SyntaxError(f"Unexpected {token.token_type} {token.value} in expression at line {self.current_line}")
 
     def parse_condition(self):
         left = self.parse_expression()
@@ -532,7 +568,7 @@ class Parser:
         return condition_node
 
     def parse(self):
-        return self.parse_program()
+        return self.parse_program(), self.is_success
 
 
 def main():
@@ -546,7 +582,7 @@ def main():
         with open(args.file, "r") as file:
             source_code = file.read()
     except FileNotFoundError:
-        print(f"Error: File {args.file} not found.")
+        print(f"\nError: File {args.file} not found.\n")
         sys.exit(1)
 
     tokens, errors = scanner(source_code)
@@ -558,13 +594,12 @@ def main():
 
         parser = Parser(scanned_tokens)
 
-        try:
-            ast = parser.parse()
+        ast, is_success = parser.parse()
+        if is_success:
             print("\nGenerated AST:\n")
             ast.display_tree()
-            print("")
-        except SyntaxError as err:
-            print(f'\nSyntax Error: {err}\n')
+        print("")
+
     else:
         print("\nLexical Errors Found:\n")
         for error in errors:

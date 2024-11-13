@@ -1,0 +1,64 @@
+├── PROGRAM
+    ├── LOAD-STMT
+        ├── PATH: "../../csv_files/sales.csv"
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: true
+    ├── DISPLAY-STMT
+        ├── COLUMN-LIST
+            ├── COLUMN: "goods"
+            ├── COLUMN: "sales"
+        ├── NUM-ATTR
+            ├── KEYWORD: num
+            ├── OPERATOR: =
+            ├── NUMBER: 2
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: true
+        ├── SORT-ATTR
+            ├── KEYWORD: sort
+            ├── OPERATOR: =
+            ├── COLUMN-LIST
+                ├── COLUMN: "goods"
+                ├── COLUMN: "sales"
+    ├── DISPLAY-STMT
+        ├── COLUMN-LIST
+            ├── COLUMN: "goods"
+            ├── COLUMN: "sales"
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: true
+        ├── FILTER-ATTR
+            ├── KEYWORD: filter
+            ├── OPERATOR: =
+            ├── CONDITION
+                ├── CONDITION
+                    ├── CONDITION
+                        ├── COLUMN: "sales"
+                        ├── OPERATOR: >=
+                        ├── NUMBER: 10
+                    ├── OPERATOR: &
+                    ├── CONDITION
+                        ├── COLUMN: "goods"
+                        ├── OPERATOR: =
+                        ├── COLUMN: "Paper"
+                ├── OPERATOR: |
+                ├── CONDITION
+                    ├── COLUMN: "sales"
+                    ├── OPERATOR: =
+                    ├── NUMBER: 5
+    ├── PRINT-STMT
+        ├── MESSAGE: "The maximum sales: "
+        ├── AGGR-FUNC: MAX
+            ├── COLUMN: "sales"
+    ├── PRINT-STMT
+        ├── MESSAGE: "The minimum sales: "
+        ├── AGGR-FUNC: MIN
+            ├── COL-INDEX: 2
+    ├── PRINT-STMT
+        ├── MESSAGE: "The total number of goods: "
+        ├── AGGR-FUNC: COUNT
+            ├── COLUMN: "goods"

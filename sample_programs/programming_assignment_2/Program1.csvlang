@@ -1,0 +1,9 @@
+LOAD ("../../csv_files/student_scores.csv" header = true);
+
+DISPLAY ("name", "score", num=2, header = true)
+
+"STORE" ("name", "score", num=1, header = true, path = "../../csv_files/student_scores_new_one_row.csv");
+STORE ("name", "score", num=2, num=2, header = true, path = "../../csv_files/student_scores_new_two_rows.csv");
+STORE (num=3, header = true, path = "../../csv_files/student_scores_new_three_rows.csv");
+
+PRINT ("The average score: ", AVERAGE("score"));

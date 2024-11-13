@@ -1,0 +1,4 @@
+Syntax Error(s) Found:
+
+Path attribute is missing in merge statement with save=true at line 3
+Aggregate function should have a column name or a column index as the parameter at line 4

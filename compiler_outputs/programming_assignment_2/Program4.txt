@@ -1,0 +1,45 @@
+Generated AST:
+
+├── PROGRAM
+    ├── LOAD-STMT
+        ├── PATH: "../../csv_files/sales_data.csv"
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: true
+        ├── TAG-ATTR
+            ├── KEYWORD: tag
+            ├── OPERATOR: =
+            ├── STRING: "sales"
+    ├── DELETE-STMT
+        ├── TAG-ATTR
+            ├── KEYWORD: tag
+            ├── OPERATOR: =
+            ├── STRING: "sales"
+    ├── CREATE-STMT
+        ├── PATH: "../../csv_files/new_sales.csv"
+    ├── ADD-STMT
+        ├── TUPLE-LIST
+            ├── TUPLE
+                ├── VALUE: "goods"
+                ├── VALUE: "date"
+                ├── VALUE: "sales"
+            ├── TUPLE
+                ├── VALUE: "Paper"
+                ├── VALUE: "11-12-2024"
+                ├── VALUE: "100"
+            ├── TUPLE
+                ├── VALUE: "Pen"
+                ├── VALUE: "11-9-2024"
+                ├── VALUE: "86"
+    ├── DISPLAY-STMT
+        ├── COLUMN-LIST
+            ├── COLUMN: "goods"
+            ├── COLUMN-EXPR
+                ├── COLUMN: "sales"
+                ├── OPERATOR: +
+                ├── NUMBER: 10
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: true

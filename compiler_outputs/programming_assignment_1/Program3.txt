@@ -1,0 +1,84 @@
+TOKENS
+< keyword, LOAD >
+< separator, ( >
+< string, "../../csv_files/sales.csv" >
+< separator, , >
+< keyword, header >
+< operator, = >
+< literal, true >
+< separator, ) >
+< separator, ; >
+< keyword, DISPLAY >
+< separator, ( >
+< string, "goods" >
+< separator, , >
+< string, "sales" >
+< separator, , >
+< keyword, num >
+< operator, = >
+< separator, , >
+< keyword, header >
+< operator, = >
+< literal, true >
+< separator, , >
+< keyword, sort >
+< operator, = >
+< separator, ( >
+< string, "goods" >
+< separator, ) >
+< separator, ) >
+< separator, ; >
+< keyword, DISPLAY >
+< separator, ( >
+< string, "goods" >
+< separator, , >
+< string, "sales" >
+< separator, , >
+< keyword, header >
+< operator, = >
+< literal, true >
+< separator, , >
+< keyword, filter >
+< operator, = >
+< separator, ( >
+< string, "sales" >
+< operator, >= >
+< number, 10 >
+< operator, & >
+< string, "goods" >
+< operator, = >
+< string, "Paper" >
+< separator, ) >
+< separator, ) >
+< separator, ; >
+< keyword, PRINT >
+< separator, ( >
+< string, "The maximum sales: " >
+< separator, , >
+< separator, ( >
+< string, "sales" >
+< separator, ) >
+< separator, ) >
+< separator, ; >
+< keyword, PRINT >
+< separator, ( >
+< string, "The minimum sales: " >
+< separator, , >
+< keyword, MIN >
+< separator, ( >
+< string, "sales" >
+< separator, ) >
+< separator, ) >
+< separator, ; >
+< keyword, PRINT >
+< separator, ( >
+< string, "The total number of goods: " >
+< separator, , >
+< keyword, COUNT >
+< separator, ( >
+
+ERRORS
+Invalid number with leading zero(s): 02
+Invalid keyword or literal: MAXIMUM
+Unrecognized character: @
+Unclosed string: "goods));

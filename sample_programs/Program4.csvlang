@@ -1,7 +1,0 @@
-LOAD ("../csv_files/sales.csv", header = true, tag = "sales");
-
-DELETE (tag = "sales");
-
-CREATE ("../csv_files/sales.csv");
-ADD (("goods", "date", "sales"), ("Paper", "10-14-2024", "100"), ("Pen", "10-13-2024", "86"));
-DISPLAY ("goods", "sales" + 10, header = True);
