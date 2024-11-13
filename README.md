@@ -172,7 +172,7 @@ error type: invalid token
 ### Execution
 
 You can run [this scanner](scanner.py) using the following command. Detailed installation and execution steps are
-given [below](#installation-and-usage).
+given [below](#installation-and-usage-scanning).
 
 ```bash
 python scanner.py </path/to/file.csv>
@@ -240,7 +240,7 @@ The following inputs end up in error states.
 ### Test Cases (Scanning)
 
 You can run the [unit test file](tests/programming_assignment_1/test_scanner.py) that checks the scanner against
-some [Sample Programs](#sample-programs) using the
+some [Sample Programs](#sample-programs--scanning-) using the
 following command.
 
 ```bash
@@ -746,7 +746,7 @@ python3 parser.py </path/to/file.csv>
 ## Test Cases (Parsing)
 
 You can run the [unit test file](tests/programming_assignment_2/test_parser.py) that checks the parser against
-some [Sample Programs](#sample-programs-(parsing)) using the following command.
+some [Sample Programs](#sample-programs--parsing-) using the following command.
 
 ```bash
 python tests/programming_assignment_2/test_parser.py
@@ -813,7 +813,8 @@ proceeds to display all records of three columns in the file.
 
 ## Installation and Usage (Parsing)
 
-For [Python](https://www.python.org/) and [Homebrew](https://brew.sh/), you can follow the same installation steps as shown above for scanning.
+For [Python](https://www.python.org/) and [Homebrew](https://brew.sh/), you can follow the same installation steps 
+as shown [above](#sample-programs--scanning-) for scanning.
 
 Additionally, you can also run the pre-existing [shell scripts](shell_scripts/programming_assignment_2) 
 specifically added for parsing, which take care of the installations.
