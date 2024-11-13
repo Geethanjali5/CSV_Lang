@@ -35,6 +35,21 @@ else
     echo "Python3 is already installed."
 fi
 
-# Step 2: Run the tests
-echo "Running the tests..."
-python3 ../test.py "$1"
+# Step 2: Install argparse if needed (should be part of standard library)
+python3 -m pip install argparse
+
+# Step 3: Run all the sample programs
+printf "\nParsing Sample Program 1\n"
+python3 ../../parser.py ../../sample_programs/programming_assignment_2/Program1.csvlang
+
+echo "Parsing Sample Program 2"
+python3 ../../parser.py ../../sample_programs/programming_assignment_2/Program2.csvlang
+
+echo "Parsing Sample Program 3"
+python3 ../../parser.py ../../sample_programs/programming_assignment_2/Program3.csvlang
+
+echo "Parsing Sample Program 4"
+python3 ../../parser.py ../../sample_programs/programming_assignment_2/Program4.csvlang
+
+echo "Parsing Sample Program 5"
+python3 ../../parser.py ../../sample_programs/programming_assignment_2/Program5.csvlang

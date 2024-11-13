@@ -35,21 +35,6 @@ else
     echo "Python3 is already installed."
 fi
 
-# Step 2: Install argparse if needed (should be part of standard library)
-python3 -m pip install argparse
-
-# Step 3: Run all the sample programs
-printf "\nLexing Sample Program 1\n"
-python3 ../scanner.py ../sample_programs/Program1.csvlang
-
-echo "Lexing Sample Program 2"
-python3 ../scanner.py ../sample_programs/Program2.csvlang
-
-echo "Lexing Sample Program 3"
-python3 ../scanner.py ../sample_programs/Program3.csvlang
-
-echo "Lexing Sample Program 4"
-python3 ../scanner.py ../sample_programs/Program4.csvlang
-
-echo "Lexing Sample Program 5"
-python3 ../scanner.py ../sample_programs/Program5.csvlang
+# Step 2: Run the tests
+echo "Running the tests..."
+python3 ../../tests/programming_assignment_1/test_scanner.py
