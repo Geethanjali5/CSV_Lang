@@ -1,7 +1,7 @@
 TOKENS
 < keyword, LOAD >
 < separator, ( >
-< string, "../csv_files/student_scores.csv" >
+< string, "../../csv_files/student_scores.csv" >
 < separator, , >
 < keyword, header >
 < operator, = >
@@ -39,7 +39,7 @@ TOKENS
 < separator, , >
 < keyword, path >
 < operator, = >
-< string, "../csv_files/student_scores_new.csv" >
+< string, "../../csv_files/student_scores_new.csv" >
 < separator, ) >
 < separator, ; >
 < keyword, PRINT >

@@ -1,9 +1,0 @@
-PROGRAM
-  ├── LOAD-STMT
-  │     ├── PATH: "data.csv"
-  │     ├── HEADER-ATTR
-  │           ├── header
-  │           ├── =
-  │           ├── true
-  ├── PRINT-STMT
-        ├── MESSAGE: "Loading completed"

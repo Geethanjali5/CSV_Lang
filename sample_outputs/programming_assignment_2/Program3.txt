@@ -1,0 +1,11 @@
+goods,sales
+Bread,5
+Eggs,34
+
+goods,sales
+Paper,40
+Bread,5
+
+The maximum sales: 40
+The minimum sales: 5
+The total number of goods: 3

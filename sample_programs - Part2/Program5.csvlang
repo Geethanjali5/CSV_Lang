@@ -1,4 +1,0 @@
-// Incorrect Syntax Example (Error Handling)
-
-DELETE("tag1"
-ADD(("value1", "value2"));

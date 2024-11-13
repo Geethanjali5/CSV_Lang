@@ -1,9 +1,0 @@
-PROGRAM
-  ├── DISPLAY-STMT
-        ├── COLUMN-LIST
-        │     ├── COLUMN: "column1"
-        ├── SORT-ATTR
-              ├── sort
-              ├── =
-              ├── COLUMN-LIST
-                    ├── COLUMN: "column2"

@@ -1,2 +1,0 @@
-// DISPLAY Command with Sort Attribute
-DISPLAY("column1", sort=("column2"));

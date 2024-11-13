@@ -1,0 +1,3 @@
+goods,sales
+Paper,110
+Pen,96

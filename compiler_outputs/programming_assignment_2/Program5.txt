@@ -1,0 +1,24 @@
+Generated AST:
+
+├── PROGRAM
+    ├── LOAD-STMT
+        ├── PATH: "../../csv_files/matrix.csv"
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: false
+    ├── REMOVE-STMT
+        ├── TUPLE-LIST
+            ├── TUPLE
+                ├── VALUE: "22"
+                ├── VALUE: "10.2"
+                ├── VALUE: "45"
+    ├── DISPLAY-STMT
+        ├── COL-INDEX-LIST
+            ├── COL-INDEX: 1
+            ├── COL-INDEX: 2
+            ├── COL-INDEX: 3
+        ├── HEADER-ATTR
+            ├── KEYWORD: header
+            ├── OPERATOR: =
+            ├── LITERAL: false

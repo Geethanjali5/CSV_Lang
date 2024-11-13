@@ -1,7 +1,7 @@
 TOKENS
 < keyword, LOAD >
 < separator, ( >
-< string, "../csv_files/matrix.csv" >
+< string, "../../csv_files/matrix.csv" >
 < separator, , >
 < keyword, header >
 < operator, = >

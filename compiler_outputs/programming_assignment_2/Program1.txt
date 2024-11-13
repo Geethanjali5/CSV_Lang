@@ -1,0 +1,7 @@
+Syntax Error(s) Found:
+
+Expected separator ), found keyword header at line 1
+Missing semicolon at line 2
+Unexpected string "STORE" at line 3
+Num attribute already exists at line 4
+Column list or index list is missing in store statement at line 5
