@@ -814,7 +814,7 @@ proceeds to display all records of three columns in the file.
 ## Installation and Usage (Parsing)
 
 For [Python](https://www.python.org/) and [Homebrew](https://brew.sh/), you can follow the same installation steps 
-as shown [above](#sample-programs--scanning-) for scanning.
+as shown [above](#installation-and-usage-scanning) for scanning.
 
 Additionally, you can also run the pre-existing [shell scripts](shell_scripts/programming_assignment_2) 
 specifically added for parsing, which take care of the installations.
