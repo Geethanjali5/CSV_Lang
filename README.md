@@ -774,6 +774,7 @@ memory and tags them as batch1 and batch2 respectively. It merges the two files 
 file in memory called [combined_sales.csv](/csv_files/combined_sales.csv). It also prints the total sales of batch 1 and
 batch 2. However, this does not compile owing to some syntax errors like the ones shown in the output below.
 
+
 [Source Code](sample_programs/programming_assignment_2/Program2.csvlang)<br>
 [Parser Output](compiler_outputs/programming_assignment_2/Program2.txt)<br>
 Program Output: No output produced as there are syntax error(s) present.
@@ -785,6 +786,7 @@ goods lexicographically and sorting sales in ascending order for records of same
 all Paper sales which are more than or equal to 10 or goods whose sales are equal to 5. It also displays 
 the maximum sales, minimum sales, and the count of unique goods.
 
+
 [Source Code](sample_programs/programming_assignment_2/Program3.csvlang)<br>
 [Parser Output](compiler_outputs/programming_assignment_2/Program3.txt)<br>
 [Program Output](sample_outputs/programming_assignment_2/Program3.txt)
@@ -795,6 +797,7 @@ This program loads the [sales.csv](/csv_files/sales.csv) file into the memory an
 delete it. It creates a [new file](/csv_files/new_sales.csv) and adds a few records in it. Finally, it aims to display 
 goods and sales from the new table after incrementing sales by 10.
 
+
 [Source Code](sample_programs/programming_assignment_2/Program4.csvlang)<br>
 [Parser Output](compiler_outputs/programming_assignment_2/Program4.txt)<br>
 [Program Output](sample_outputs/programming_assignment_2/Program4.txt)
@@ -803,6 +806,8 @@ goods and sales from the new table after incrementing sales by 10.
 
 This program loads the [matrix.csv](/csv_files/matrix.csv) file into the memory and removes a row from it. It then
 proceeds to display all records of three columns in the file.
+
+
 
 [Source Code](sample_programs/programming_assignment_2/Program5.csvlang)<br>
 [Parser Output](compiler_outputs/programming_assignment_2/Program5.txt)<br>
