@@ -199,8 +199,7 @@ and proceeding with the rest of the code.
 
 #### Accepting States
 
-1. [**Keyword / Literal
-   **](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L51): If the
+1. [**Keyword / Literal**](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L51): If the
    current character is a letter, the scanner keeps moving forward appending
    every character to a temporary variable called lexeme as long as it keeps encountering a letter. It stops when it
    gets something other than a letter. At this point, it compares the lexeme against the set of known keywords and
@@ -211,16 +210,14 @@ and proceeding with the rest of the code.
    every character to a temporary variable called lexeme as long as its a digit. It stops when it gets something other
    than a digit. At this point, it checks if lexeme is `0` or any other number without a leading 0, if that is the
    case it classifies it as a number else it reports an error.
-3. [**Operator
-   **](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L83): If the
+3. [**Operator**](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L83): If the
    current character belongs to the list of operators and is one of `<`
    or `>`, the scanner **looks ahead** to check the next character. If the first character is `<` and the next character
    happens to be `>` or `=`,
    or if the first character is `>` and the next character happens to be `=`, the scanner classifies both the characters
    as a
    operator else only the first character.
-4. [**Separator
-   **](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L99): If the
+4. [**Separator**](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L99): If the
    current character belongs to the list of separators, then it is classified as a separator.
 5. [**String**](https://github.com/Geethanjali5/CSV_Lang/blob/f0ac58bd7fd2d8567fd91fc554973b64f48a8f95/scanner.py#L104):
    If the current character is a `"`, the scanner keeps moving forward appending
