@@ -1,0 +1,5 @@
+CSVLang Output
+
+   goods  sales
+0  Paper    110
+1    Pen     96

@@ -1,0 +1,4 @@
+CSVLang Output
+
+The total sales of batch 1:  79
+The total sales of batch 2:  74
