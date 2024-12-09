@@ -1140,6 +1140,8 @@ This program deals with merging sales data from two CSV files, `sales.csv` and `
 ### Test Case 3: Sample Program 3
 
 This program performs advanced operations on a CSV file, `sales.csv`. After loading the data, it displays the first two rows, sorted lexicographically by the `goods` column. The program then applies filtering conditions to display sales data for specific goods, such as items with sales greater than or equal to 10 and named "Paper," or sales equal to 5. Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. This test ensures the correctness of sorting, filtering, and advanced aggregations.
+
+
 [Source Code](sample_programs/programming_assignment_3/Program3.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program3.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program3.txt)
@@ -1149,6 +1151,7 @@ This program performs advanced operations on a CSV file, `sales.csv`. After load
 ### Test Case 4: Sample Program 4
 
 This program demonstrates file handling and data manipulation tasks. It starts by loading the `sales.csv` file, then deletes it from the filesystem to simulate cleanup. A new file named `new_sales.csv` is created, and several rows of data are added to it. The program then increments the `sales` column values by 10 and displays the updated results. This test verifies file creation, deletion, data appending, and column-wise updates in the DataFrame.
+
 [Source Code](sample_programs/programming_assignment_3/Program4.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program4.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program4.txt)
@@ -1158,6 +1161,7 @@ This program demonstrates file handling and data manipulation tasks. It starts b
 ### Test Case 5: Sample Program 5
 
 This program tests error handling in the **Code Generator**. It attempts to load a CSV file without providing a valid header argument, resulting in a syntax error. The program ensures that the Code Generator can detect and report syntax issues accurately. Specifically, it captures the error message indicating that a string was expected but a keyword (`header`) was found. This test case demonstrates the robustness of the error detection mechanism.
+
 [Source Code](sample_programs/programming_assignment_3/Program5.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program5.txt)<br>
 Program Output: No output produced as there are syntax error(s) present.
