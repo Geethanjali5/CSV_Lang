@@ -877,30 +877,195 @@ The `code_generator.py` script implements a compiler phase that generates Python
 
 ### 3. **Python Code Generation**
 - Function: `generate_python_code(node)`
-- Purpose: Recursively traverses the AST and generates Python code based on the node types.
-- Supported Statements:
-  - **`LOAD-STMT`**:
-    - Loads a CSV file into a Pandas DataFrame.
-    - Handles headers and assigns tags for reuse in subsequent statements.
-  - **`DISPLAY-STMT`**:
-    - Filters, sorts, and selects specific columns for display.
-    - Generates and prints the result as a Pandas DataFrame subset.
-  - **`STORE-STMT`**:
-    - Saves processed data into a CSV file.
-  - **`PRINT-STMT`**:
-    - Prints messages or calculated values (e.g., aggregate functions).
-  - **`MERGE-STMT`**:
-    - Merges multiple DataFrames and optionally saves the result.
-  - **`DELETE-STMT`**:
-    - Deletes a CSV file based on its tag.
-  - **`CREATE-STMT`**:
-    - Creates an empty CSV file.
-  - **`ADD-STMT`**:
-    - Appends rows of data to an existing CSV file.
-  - **`REMOVE-STMT`**:
-    - Removes specific rows from a DataFrame.
+- Purpose: The `generate_python_code` function is the core of the Code Generator for CSVLang. It takes an Abstract Syntax Tree (AST) as input and recursively generates Python code based on the node type. The resulting Python code executes CSV file operations like loading, displaying, merging, and storing data.
 
 ---
+
+## Node Types and Their Descriptions
+
+### 1. **PROGRAM Node**
+- **Purpose**: Represents the root of the AST.
+- **Action**: Iterates through all child nodes and recursively generates Python code for each of them.
+- **Result**: Combines the generated code from all child nodes.
+
+---
+
+### 2. **LOAD-STMT Node**
+- **Purpose**: Loads a CSV file into a Pandas DataFrame.
+- **Steps**:
+  1. Adds Pandas imports if not already added (`import_flag`).
+  2. Processes the following attributes:
+     - `PATH`: Specifies the file path.
+     - `HEADER`: Indicates whether the file has a header row (`true`/`false`).
+     - `TAG`: Assigns a variable name for the DataFrame.
+  3. Updates the `path_map` and active tag (`active_tag`) for future reference.
+  4. Generates a `pd.read_csv()` statement to load the file.
+
+- **Example CSVLang**:
+  ```csvlang
+  LOAD "data.csv" HEADER=true TAG="data"
+  ```
+- **Generated Code:**
+  ```python
+  import pandas as pd
+  data = pd.read_csv("data.csv", header=0)
+  ```
+---
+
+### 3. DISPLAY-STMT Node
+
+- **Purpose**: Displays filtered, sorted, and selected columns from a DataFrame.
+
+- **Steps**:
+  1. Extracts attributes like column names, number of rows (`NUM`), sort order (`SORT-ATTR`), and filters (`FILTER-ATTR`).
+  2. Converts filters into valid Python expressions using `generate_filter_expression`.
+  3. Applies sorting and filtering logic with Pandas `sort_values` and `loc`.
+  4. Selects specific columns or column indices for display.
+  5. Prints the resulting DataFrame.
+
+- **Example**:
+
+```csvlang
+DISPLAY data COLUMNS("Name", "Score") SORT_BY("Score") NUM=3
+```
+- **Generated Code:**
+```python
+a4 = data.sort_values(by=["Score"]).head(3)
+print(a4.loc[:, ["Name", "Score"]])
+```
+
+---
+### 4. STORE-STMT Node
+
+- **Purpose**: Saves a processed DataFrame to a new CSV file.
+
+- **Steps**:
+1. Extracts columns, filters, and sort conditions, similar to `DISPLAY-STMT`.
+2. Saves the resulting DataFrame to a specified file path using `to_csv`.
+3. Handles column indices if specified.
+
+- **Example**:
+```csvlang
+STORE data TO "output.csv" COLUMNS("Name", "Score")
+```
+- **Generated Code:**
+```python
+a4.loc[:, ["Name", "Score"]].to_csv("output.csv", index=False)
+```
+
+---
+### 5. PRINT-STMT Node
+
+- **Purpose**: Prints messages or aggregated values from a DataFrame.
+
+- **Steps**:
+1. Processes attributes like `MESSAGE`, aggregate functions (`AGGR-FUNC`), and the target column.
+2. Maps aggregate functions (e.g., `average`, `sum`) to their Pandas equivalents (e.g., `mean`, `sum`).
+3. Generates a print statement with the message and computed value.
+
+- **Example**:
+```csvlang
+PRINT "Average Score:" AVG("Score") TAG="data"
+```
+- **Generated Code:**
+```python
+print("Average Score:", data["Score"].mean())
+```
+---
+### 6. MERGE-STMT Node
+
+- **Purpose**: Merges multiple DataFrames and optionally saves the result.
+
+- **Steps**:
+1. Collects a list of DataFrame tags to merge.
+2. Uses Pandas `concat()` to combine them.
+3. Saves the result to a specified file if the `SAVE` attribute is true.
+
+- **Example**:
+```csvlang
+MERGE data1, data2 SAVE TO "merged.csv"
+```
+- **Generated Code:**
+```python
+pd.concat([data1, data2]).to_csv("merged.csv", index=False)
+```
+---
+
+### 7. DELETE-STMT Node
+
+- **Purpose**: Deletes a CSV file from the file system.
+
+- **Steps**:
+1. Retrieves the file path associated with the tag from `path_map`.
+2. Deletes the file using Python's `Path.unlink()`.
+
+- **Example**:
+```csvlang
+DELETE TAG="data"
+```
+- **Generated Code:**
+```python
+file_path = Path("data.csv")
+file_path.unlink()
+```
+---
+
+### 8. CREATE-STMT Node
+
+- **Purpose**: Creates a new empty CSV file.
+
+- **Steps**:
+1. Retrieves the file path from the `PATH` attribute.
+2. Creates the file using Python's `open()` function in write mode.
+
+- **Example**:
+```csvlang
+CREATE "new_file.csv"
+```
+- **Generated Code:**
+```python
+open("new_file.csv", "w").close()
+```
+---
+### 9. ADD-STMT Node
+
+- **Purpose**: Adds rows of data to an existing CSV file.
+
+- **Steps**:
+1. Extracts rows of data as tuples from the node.
+2. Appends rows to the file using Python's `write()` method.
+3. Reloads the updated file into the DataFrame.
+
+- **Example**:
+```csvlang
+ADD ROWS (1, "John") TO "data.csv"
+```
+- **Generated Code:**
+```python
+with open("data.csv", "a") as file:
+    file.write("1,John\n")
+data = pd.read_csv("data.csv", header=0)
+```
+---
+### 10. REMOVE-STMT Node
+
+- **Purpose**: Removes specific rows from a DataFrame.
+
+- **Steps**:
+1. Extracts the rows to be removed.
+2. Compares each row in the DataFrame against the specified values.
+3. Filters out matching rows and saves the updated DataFrame.
+
+- **Example**:
+```csvlang
+REMOVE ROWS (1, "John") FROM "data.csv"
+```
+- **Generated Code:**
+```python
+a2 = data.apply(lambda row: tuple(row.values) in [(1, "John")], axis=1)
+data = data[~a2]
+data.to_csv("data.csv", index=False, header=False)
+```
 
 ### 4. **Code Optimization**
 - Function: `optimize_code(code)`
