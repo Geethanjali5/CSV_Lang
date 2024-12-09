@@ -1105,6 +1105,59 @@ The script handles errors gracefully at various stages:
    - Ensures valid operations are performed, e.g., proper column indexing.
 
 ---
+# Unit Testing for Code Generator
+
+The `testcodegenerator.py` file contains test cases to validate the functionality of the Code Generator module, which translates **CSVLang** code into Python code and executes it. Each test case corresponds to a sample program and verifies that the generated Python code performs the expected operations.
+
+---
+
+### Test Case 1: Sample Program 1
+
+This program involves working with a CSV file containing student scores. The program starts by loading the `student_scores.csv` file into memory as a Pandas DataFrame. It then displays the first two rows of the data, focusing on the `name` and `score` columns. Afterward, it saves these rows to a new CSV file named `student_scores_new.csv`. Finally, it calculates the average score of all students and prints the result. This test ensures the proper functioning of data loading, displaying, saving, and basic aggregation operations.
+
+[Source Code](sample_programs/programming_assignment_3/Program1.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_3/Program1.txt)<br>
+[Program Output](sample_outputs/programming_assignment_3/Program1.txt)
+
+---
+
+### Test Case 2: Sample Program 2
+
+This program deals with merging sales data from two CSV files, `sales.csv` and `sales1.csv`. The two files are loaded into memory as separate DataFrames, tagged as `batch1` and `batch2`. The program merges the contents of these two DataFrames into a single file named `combined_sales.csv`. Additionally, it calculates and prints the total sales for each batch. This test validates the merging of DataFrames, tagging mechanisms, and the computation of aggregated metrics.
+
+[Source Code](sample_programs/programming_assignment_3/Program2.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_3/Program2.txt)<br>
+[Program Output](sample_outputs/programming_assignment_3/Program2.txt)
+
+
+---
+
+### Test Case 3: Sample Program 3
+
+This program performs advanced operations on a CSV file, `sales.csv`. After loading the data, it displays the first two rows, sorted lexicographically by the `goods` column. The program then applies filtering conditions to display sales data for specific goods, such as items with sales greater than or equal to 10 and named "Paper," or sales equal to 5. Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. This test ensures the correctness of sorting, filtering, and advanced aggregations.
+[Source Code](sample_programs/programming_assignment_3/Program3.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_3/Program3.txt)<br>
+[Program Output](sample_outputs/programming_assignment_3/Program3.txt)
+
+---
+
+### Test Case 4: Sample Program 4
+
+This program demonstrates file handling and data manipulation tasks. It starts by loading the `sales.csv` file, then deletes it from the filesystem to simulate cleanup. A new file named `new_sales.csv` is created, and several rows of data are added to it. The program then increments the `sales` column values by 10 and displays the updated results. This test verifies file creation, deletion, data appending, and column-wise updates in the DataFrame.
+[Source Code](sample_programs/programming_assignment_3/Program4.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_3/Program4.txt)<br>
+[Program Output](sample_outputs/programming_assignment_3/Program4.txt)
+
+---
+
+### Test Case 5: Sample Program 5
+
+This program tests error handling in the **Code Generator**. It attempts to load a CSV file without providing a valid header argument, resulting in a syntax error. The program ensures that the Code Generator can detect and report syntax issues accurately. Specifically, it captures the error message indicating that a string was expected but a keyword (`header`) was found. This test case demonstrates the robustness of the error detection mechanism.
+[Source Code](sample_programs/programming_assignment_3/Program5.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_3/Program5.txt)<br>
+Program Output: No output produced as there are syntax error(s) present.
+
+---
 
 
 
