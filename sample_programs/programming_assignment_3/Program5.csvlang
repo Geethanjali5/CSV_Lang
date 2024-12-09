@@ -1,0 +1,4 @@
+LOAD ("csv_files/matrix.csv", header = false);
+
+REMOVE (("22", "10.2", "45"));
+DISPLAY (1, 2, 3, header = false);

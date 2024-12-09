@@ -1,0 +1,8 @@
+LOAD ("csv_files/sales.csv", header = true, tag = "sales");
+LOAD ("csv_files/matrix.csv", header = true, tag = "dead_code");
+
+DELETE (tag = "sales");
+
+CREATE ("csv_files/new_sales.csv");
+ADD (("goods", "date", "sales"), ("Paper", "11-12-2024", "100"), ("Pen", "11-9-2024", "86"));
+DISPLAY ("goods", "sales" + 10, header = true);
