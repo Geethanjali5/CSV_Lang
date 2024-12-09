@@ -843,6 +843,106 @@ analysis and displays the outputs of all the [Sample Programs](sample_programs/p
    ./run_sample_programs.sh
    ```
 
+# Programming Assignment 3:
+
+## CSVLang Code Generator Algorithm
+
+## Overview
+The `code_generator.py` script implements a compiler phase that generates Python code from the Abstract Syntax Tree (AST) of a custom language, **CSVLang**, designed for performing operations on CSV files. The generated Python code directly executes the intended CSV manipulations, enabling tasks like data filtering, sorting, merging, and more.
+
+---
+
+## Key Components of the Algorithm
+
+### 1. **Filter Expression Generator**
+- Function: `generate_filter_expression(node, tag)`
+- Purpose: Converts conditional expressions in the AST into Python-compatible filter expressions for Pandas DataFrames.
+- Steps:
+  - Recursively processes AST nodes for `CONDITION`, `COLUMN`, `OPERATOR`, and `NUMBER`.
+  - Translates logical operators (`=`, `<>`) into Python equivalents (`==`, `!=`).
+  - Outputs a valid Python expression for row filtering in DataFrames.
+
+---
+
+### 2. **Sub-Expression Processing**
+- Function: `process_sub_expression(sub_expression)`
+- Purpose: Simplifies and organizes nested logical expressions into readable Python code.
+- Steps:
+  - Handles different formats of expressions:
+    - Logical expressions (`&`, `|`) are recursively processed.
+    - Combines sub-expressions into a single, valid logical statement.
+  - Ensures parentheses are added for clarity in complex expressions.
+
+---
+
+### 3. **Python Code Generation**
+- Function: `generate_python_code(node)`
+- Purpose: Recursively traverses the AST and generates Python code based on the node types.
+- Supported Statements:
+  - **`LOAD-STMT`**:
+    - Loads a CSV file into a Pandas DataFrame.
+    - Handles headers and assigns tags for reuse in subsequent statements.
+  - **`DISPLAY-STMT`**:
+    - Filters, sorts, and selects specific columns for display.
+    - Generates and prints the result as a Pandas DataFrame subset.
+  - **`STORE-STMT`**:
+    - Saves processed data into a CSV file.
+  - **`PRINT-STMT`**:
+    - Prints messages or calculated values (e.g., aggregate functions).
+  - **`MERGE-STMT`**:
+    - Merges multiple DataFrames and optionally saves the result.
+  - **`DELETE-STMT`**:
+    - Deletes a CSV file based on its tag.
+  - **`CREATE-STMT`**:
+    - Creates an empty CSV file.
+  - **`ADD-STMT`**:
+    - Appends rows of data to an existing CSV file.
+  - **`REMOVE-STMT`**:
+    - Removes specific rows from a DataFrame.
+
+---
+
+### 4. **Code Optimization**
+- Function: `optimize_code(code)`
+- Purpose: Removes redundant or unused variables from the generated code to improve efficiency.
+- Steps:
+  - Identifies unused tags in the code.
+  - Filters out unnecessary lines, ensuring only the required code is retained.
+
+---
+
+### 5. **Main Execution Flow**
+- Function: `main()`
+- Purpose: Orchestrates the overall process of reading, scanning, parsing, generating, and executing code.
+- Steps:
+  1. **Input Handling**:
+     - Accepts a CSVLang source file as input via command-line arguments.
+  2. **Lexical Analysis**:
+     - Uses the `scanner` to tokenize the input source code.
+  3. **Parsing**:
+     - Builds an Abstract Syntax Tree (AST) from the tokens using the `Parser`.
+  4. **Code Generation**:
+     - Generates Python code by traversing the AST.
+  5. **Execution**:
+     - Executes the generated Python code using Python’s `exec()` function.
+
+---
+
+## Error Handling
+The script handles errors gracefully at various stages:
+1. **Lexical Errors**:
+   - Detected during tokenization by the `scanner`.
+2. **Parsing Errors**:
+   - Reported during AST construction.
+3. **File Not Found**:
+   - Handled when attempting to read the source code file.
+4. **Logical Errors**:
+   - Ensures valid operations are performed, e.g., proper column indexing.
+
+---
+
+
+
 ## Contribution
 
 **Team Name**: Compile and Conquer
