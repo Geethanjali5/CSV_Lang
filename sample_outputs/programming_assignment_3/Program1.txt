@@ -1,0 +1,8 @@
+CSVLang Output
+
+         name  score
+0    Abhishek     20
+1  Githanjali     24
+
+
+The average score:  19.0

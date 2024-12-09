@@ -1,0 +1,13 @@
+Generated Python Code:
+
+from pathlib import Path
+import pandas as pd
+
+a0 = pd.read_csv("csv_files/student_scores.csv", header=[0])
+a4 = (a0.sort_values(by=[]).head(2))
+print(a4.loc[:, ['name', 'score']])
+print()
+a4 = (a0.sort_values(by=[]).head(2))
+a4.loc[:, ['name', 'score']].to_csv("csv_files/student_scores_new.csv", index=False)
+print("")
+print("The average score: ", a0["score"].mean())
