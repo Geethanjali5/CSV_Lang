@@ -400,7 +400,7 @@ class Parser:
             and self.prev_token().value != ",":
                 self.expect("separator", ",")
 
-        attribute_list, attribute_nodes = self.parse_attribute_list(['num', 'header', 'sort', 'filter'])
+        attribute_list, attribute_nodes = self.parse_attribute_list(['num', 'header', 'sort', 'filter', 'tag'])
 
         if self.prev_token().token_type == "separator" and self.prev_token().value == ",":
             self.backtrack()
@@ -430,7 +430,7 @@ class Parser:
             and self.prev_token().value != ",":
                 self.expect("separator", ",")
 
-        attribute_list, attribute_nodes = self.parse_attribute_list(['num', 'header', 'sort', 'filter', 'path'])
+        attribute_list, attribute_nodes = self.parse_attribute_list(['num', 'header', 'sort', 'filter', 'path', 'tag'])
 
         if self.prev_token().token_type == "separator" and self.prev_token().value == ",":
             self.backtrack()
