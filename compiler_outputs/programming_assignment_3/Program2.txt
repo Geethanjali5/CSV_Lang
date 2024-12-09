@@ -1,0 +1,10 @@
+Generated Python Code:
+
+from pathlib import Path
+import pandas as pd
+
+batch1 = pd.read_csv("csv_files/sales.csv", header=[0])
+batch2 = pd.read_csv("csv_files/sales1.csv", header=[0])
+pd.concat([batch1, batch2]).to_csv("csv_files/combined_sales.csv", index=False)
+print("The total sales of batch 1: ", batch1["sales"].sum())
+print("The total sales of batch 2: ", batch2["sales"].sum())
