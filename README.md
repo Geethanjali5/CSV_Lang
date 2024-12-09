@@ -1159,8 +1159,44 @@ Program Output: No output produced as there are syntax error(s) present.
 
 ---
 
+# Installation and Usage (Code Generation)
 
+For Python and Homebrew, you can follow the same installation steps as shown for setting up dependencies.
 
+Additionally, you can also run the pre-existing shell scripts specifically added for code generation, which take care of the installations and execution.
+
+### Available Shell Scripts:
+1. **run_code_generator_tests.sh**: Runs all the test cases for the code generator.
+2. **run_code_generator.sh**: Executes the code generation process for a given CSVLang file.
+3. **run_sample_programs.sh**: Generates and executes Python code for all the sample programs.
+
+### Steps to Run:
+1. Navigate to the shell scripts folder:
+   ```bash
+   cd shell_scripts/programming_assignment_3
+   ```
+2. Run the following commands to make it executable.
+   ```bash
+   chmod +x run_code_generator_tests.sh
+   chmod +x run_code_generator.sh
+   chmod +x run_sample_programs.sh
+   ```
+
+### Execute the shell scripts using the commands below:
+
+- **To run all test cases:**
+  ```bash
+  ./run_code_generator_tests.sh
+  ```
+- **To run the code generator for a specific CSVLang file:**
+   ```bash
+   ./run_parser.sh <path/to/test.csvlang>
+   ```
+ - **To run all sample programs:**  
+   ```bash
+   ./run_sample_programs.sh
+   ```
+   
 ## Contribution
 
 **Team Name**: Compile and Conquer
