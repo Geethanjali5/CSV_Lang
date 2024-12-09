@@ -852,7 +852,7 @@ The `code_generator.py` script implements a compiler phase that generates Python
 
 ---
 
-## Key Components of the Algorithm
+### Key Components of the Algorithm
 
 ### 1. **Filter Expression Generator**
 - Function: `generate_filter_expression(node, tag)`
@@ -881,16 +881,16 @@ The `code_generator.py` script implements a compiler phase that generates Python
 
 ---
 
-## Node Types and Their Descriptions
+### Node Types and Their Descriptions
 
-### 1. **PROGRAM Node**
+###  **PROGRAM Node**
 - **Purpose**: Represents the root of the AST.
 - **Action**: Iterates through all child nodes and recursively generates Python code for each of them.
 - **Result**: Combines the generated code from all child nodes.
 
 ---
-
-### 2. **LOAD-STMT Node**
+### Supported Statements:
+#### i. **LOAD-STMT Node**
 - **Purpose**: Loads a CSV file into a Pandas DataFrame.
 - **Steps**:
   1. Adds Pandas imports if not already added (`import_flag`).
@@ -912,7 +912,7 @@ The `code_generator.py` script implements a compiler phase that generates Python
   ```
 ---
 
-### 3. DISPLAY-STMT Node
+#### ii. DISPLAY-STMT Node
 
 - **Purpose**: Displays filtered, sorted, and selected columns from a DataFrame.
 
@@ -935,7 +935,7 @@ print(a4.loc[:, ["Name", "Score"]])
 ```
 
 ---
-### 4. STORE-STMT Node
+#### iii. STORE-STMT Node
 
 - **Purpose**: Saves a processed DataFrame to a new CSV file.
 
@@ -954,7 +954,7 @@ a4.loc[:, ["Name", "Score"]].to_csv("output.csv", index=False)
 ```
 
 ---
-### 5. PRINT-STMT Node
+#### iv. PRINT-STMT Node
 
 - **Purpose**: Prints messages or aggregated values from a DataFrame.
 
@@ -972,7 +972,7 @@ PRINT "Average Score:" AVG("Score") TAG="data"
 print("Average Score:", data["Score"].mean())
 ```
 ---
-### 6. MERGE-STMT Node
+#### v. MERGE-STMT Node
 
 - **Purpose**: Merges multiple DataFrames and optionally saves the result.
 
@@ -991,7 +991,7 @@ pd.concat([data1, data2]).to_csv("merged.csv", index=False)
 ```
 ---
 
-### 7. DELETE-STMT Node
+#### vi. DELETE-STMT Node
 
 - **Purpose**: Deletes a CSV file from the file system.
 
@@ -1010,7 +1010,7 @@ file_path.unlink()
 ```
 ---
 
-### 8. CREATE-STMT Node
+#### vii. CREATE-STMT Node
 
 - **Purpose**: Creates a new empty CSV file.
 
@@ -1027,7 +1027,7 @@ CREATE "new_file.csv"
 open("new_file.csv", "w").close()
 ```
 ---
-### 9. ADD-STMT Node
+#### viii. ADD-STMT Node
 
 - **Purpose**: Adds rows of data to an existing CSV file.
 
@@ -1047,7 +1047,7 @@ with open("data.csv", "a") as file:
 data = pd.read_csv("data.csv", header=0)
 ```
 ---
-### 10. REMOVE-STMT Node
+#### ix. REMOVE-STMT Node
 
 - **Purpose**: Removes specific rows from a DataFrame.
 
