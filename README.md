@@ -1055,7 +1055,7 @@ The links in the sample programs are written based on the assumption that the sc
    ./shell_scripts/programming_assignment_3/run_code_generator_tests.sh
    ```
    ```bash
-   ../shell_scripts/programming_assignment_3/run_code_generator.sh <path/to/test.csvlang>
+   ./shell_scripts/programming_assignment_3/run_code_generator.sh <path/to/test.csvlang>
    ```
    ```bash
    ./shell_scripts/programming_assignment_3/run_sample_programs.sh
