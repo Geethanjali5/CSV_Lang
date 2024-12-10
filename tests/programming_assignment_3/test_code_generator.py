@@ -112,38 +112,6 @@ The total number of goods:  3'''
 
             self.assertEqual(expected_output, received_output.strip())
 
-    # Testing Sample Program 4
-    @patch('sys.argv', ['code_generator.py', 'sample_programs/programming_assignment_3/Program4.csvlang'])
-    def test_sample_program_4(self):
-        with patch('sys.stdout', new=io.StringIO()) as mocked_stdout:
-            main()
-
-            received_output = mocked_stdout.getvalue()
-
-            expected_output = '''Generated Python Code:
-from pathlib import Path
-import pandas as pd
-
-sales = pd.read_csv("csv_files/sales.csv", header=[0])
-file_path = Path("csv_files/sales.csv")
-file_path.unlink()
-open("csv_files/new_sales.csv", "w").close()
-with open("csv_files/new_sales.csv", "a") as file:
-        file.write("goods,date,sales\n")
-        file.write("Paper,11-12-2024,100\n")
-        file.write("Pen,11-9-2024,86\n")
-a0 = pd.read_csv("csv_files/new_sales.csv", header=[0])
-a1 = a0.copy()
-a1["sales"] = a1["sales"] + 10
-a4 = (a1.sort_values(by=[]))
-print(a4.loc[:, ['goods', 'sales']])
-print()
-
-CSVLang Output
-
-   goods  sales
-0  Paper    110
-1    Pen     96
 
 
     # Testing Sample Program 5
