@@ -848,241 +848,15 @@ analysis and displays the outputs of all the [Sample Programs](sample_programs/p
    ./run_sample_programs.sh
    ```
 
-# Programming Assignment 3:
-
-## CSVLang Code Generator Algorithm
+# CSVLang Code Generation Algorithm
 
 ## Overview
-The `code_generator.py` script implements a compiler phase that generates Python code from the Abstract Syntax Tree (AST) of a custom language, **CSVLang**, designed for performing operations on CSV files. The generated Python code directly executes the intended CSV manipulations, enabling tasks like data filtering, sorting, merging, and more.
+The [code_generator.py](code_generator.py) script generates Python code from the Abstract Syntax Tree 
+(AST) of **CSVLang**, designed for performing operations on CSV files. The generated
+Python code directly executes the intended CSV manipulations, enabling tasks like data filtering, sorting,
+merging, and more.
 
----
-
-### Key Components of the Algorithm
-
-### 1. **Filter Expression Generator**
-- Function: `generate_filter_expression(node, tag)`
-- Purpose: Converts conditional expressions in the AST into Python-compatible filter expressions for Pandas DataFrames.
-- Steps:
-  - Recursively processes AST nodes for `CONDITION`, `COLUMN`, `OPERATOR`, and `NUMBER`.
-  - Translates logical operators (`=`, `<>`) into Python equivalents (`==`, `!=`).
-  - Outputs a valid Python expression for row filtering in DataFrames.
-
----
-
-### 2. **Sub-Expression Processing**
-- Function: `process_sub_expression(sub_expression)`
-- Purpose: Simplifies and organizes nested logical expressions into readable Python code.
-- Steps:
-  - Handles different formats of expressions:
-    - Logical expressions (`&`, `|`) are recursively processed.
-    - Combines sub-expressions into a single, valid logical statement.
-  - Ensures parentheses are added for clarity in complex expressions.
-
----
-
-### 3. **Python Code Generation**
-- Function: `generate_python_code(node)`
-- Purpose: The `generate_python_code` function is the core of the Code Generator for CSVLang. It takes an Abstract Syntax Tree (AST) as input and recursively generates Python code based on the node type. The resulting Python code executes CSV file operations like loading, displaying, merging, and storing data.
-
----
-
-### Node Types and Their Descriptions
-
-###  **PROGRAM Node**
-- **Purpose**: Represents the root of the AST.
-- **Action**: Iterates through all child nodes and recursively generates Python code for each of them.
-- **Result**: Combines the generated code from all child nodes.
-
----
-### Supported Statements:
-#### i. **LOAD-STMT Node**
-- **Purpose**: Loads a CSV file into a Pandas DataFrame.
-- **Steps**:
-  1. Adds Pandas imports if not already added (`import_flag`).
-  2. Processes the following attributes:
-     - `PATH`: Specifies the file path.
-     - `HEADER`: Indicates whether the file has a header row (`true`/`false`).
-     - `TAG`: Assigns a variable name for the DataFrame.
-  3. Updates the `path_map` and active tag (`active_tag`) for future reference.
-  4. Generates a `pd.read_csv()` statement to load the file.
-
-- **Example CSVLang**:
-  ```csvlang
-  LOAD "data.csv" HEADER=true TAG="data"
-  ```
-- **Generated Code:**
-  ```python
-  import pandas as pd
-  data = pd.read_csv("data.csv", header=0)
-  ```
----
-
-#### ii. DISPLAY-STMT Node
-
-- **Purpose**: Displays filtered, sorted, and selected columns from a DataFrame.
-
-- **Steps**:
-  1. Extracts attributes like column names, number of rows (`NUM`), sort order (`SORT-ATTR`), and filters (`FILTER-ATTR`).
-  2. Converts filters into valid Python expressions using `generate_filter_expression`.
-  3. Applies sorting and filtering logic with Pandas `sort_values` and `loc`.
-  4. Selects specific columns or column indices for display.
-  5. Prints the resulting DataFrame.
-
-- **Example**:
-
-```csvlang
-DISPLAY data COLUMNS("Name", "Score") SORT_BY("Score") NUM=3
-```
-- **Generated Code:**
-```python
-a4 = data.sort_values(by=["Score"]).head(3)
-print(a4.loc[:, ["Name", "Score"]])
-```
-
----
-#### iii. STORE-STMT Node
-
-- **Purpose**: Saves a processed DataFrame to a new CSV file.
-
-- **Steps**:
-1. Extracts columns, filters, and sort conditions, similar to `DISPLAY-STMT`.
-2. Saves the resulting DataFrame to a specified file path using `to_csv`.
-3. Handles column indices if specified.
-
-- **Example**:
-```csvlang
-STORE data TO "output.csv" COLUMNS("Name", "Score")
-```
-- **Generated Code:**
-```python
-a4.loc[:, ["Name", "Score"]].to_csv("output.csv", index=False)
-```
-
----
-#### iv. PRINT-STMT Node
-
-- **Purpose**: Prints messages or aggregated values from a DataFrame.
-
-- **Steps**:
-1. Processes attributes like `MESSAGE`, aggregate functions (`AGGR-FUNC`), and the target column.
-2. Maps aggregate functions (e.g., `average`, `sum`) to their Pandas equivalents (e.g., `mean`, `sum`).
-3. Generates a print statement with the message and computed value.
-
-- **Example**:
-```csvlang
-PRINT "Average Score:" AVG("Score") TAG="data"
-```
-- **Generated Code:**
-```python
-print("Average Score:", data["Score"].mean())
-```
----
-#### v. MERGE-STMT Node
-
-- **Purpose**: Merges multiple DataFrames and optionally saves the result.
-
-- **Steps**:
-1. Collects a list of DataFrame tags to merge.
-2. Uses Pandas `concat()` to combine them.
-3. Saves the result to a specified file if the `SAVE` attribute is true.
-
-- **Example**:
-```csvlang
-MERGE data1, data2 SAVE TO "merged.csv"
-```
-- **Generated Code:**
-```python
-pd.concat([data1, data2]).to_csv("merged.csv", index=False)
-```
----
-
-#### vi. DELETE-STMT Node
-
-- **Purpose**: Deletes a CSV file from the file system.
-
-- **Steps**:
-1. Retrieves the file path associated with the tag from `path_map`.
-2. Deletes the file using Python's `Path.unlink()`.
-
-- **Example**:
-```csvlang
-DELETE TAG="data"
-```
-- **Generated Code:**
-```python
-file_path = Path("data.csv")
-file_path.unlink()
-```
----
-
-#### vii. CREATE-STMT Node
-
-- **Purpose**: Creates a new empty CSV file.
-
-- **Steps**:
-1. Retrieves the file path from the `PATH` attribute.
-2. Creates the file using Python's `open()` function in write mode.
-
-- **Example**:
-```csvlang
-CREATE "new_file.csv"
-```
-- **Generated Code:**
-```python
-open("new_file.csv", "w").close()
-```
----
-#### viii. ADD-STMT Node
-
-- **Purpose**: Adds rows of data to an existing CSV file.
-
-- **Steps**:
-1. Extracts rows of data as tuples from the node.
-2. Appends rows to the file using Python's `write()` method.
-3. Reloads the updated file into the DataFrame.
-
-- **Example**:
-```csvlang
-ADD ROWS (1, "John") TO "data.csv"
-```
-- **Generated Code:**
-```python
-with open("data.csv", "a") as file:
-    file.write("1,John\n")
-data = pd.read_csv("data.csv", header=0)
-```
----
-#### ix. REMOVE-STMT Node
-
-- **Purpose**: Removes specific rows from a DataFrame.
-
-- **Steps**:
-1. Extracts the rows to be removed.
-2. Compares each row in the DataFrame against the specified values.
-3. Filters out matching rows and saves the updated DataFrame.
-
-- **Example**:
-```csvlang
-REMOVE ROWS (1, "John") FROM "data.csv"
-```
-- **Generated Code:**
-```python
-a2 = data.apply(lambda row: tuple(row.values) in [(1, "John")], axis=1)
-data = data[~a2]
-data.to_csv("data.csv", index=False, header=False)
-```
-
-### 4. **Code Optimization**
-- Function: `optimize_code(code)`
-- Purpose: Removes redundant or unused variables from the generated code to improve efficiency.
-- Steps:
-  - Identifies unused tags in the code.
-  - Filters out unnecessary lines, ensuring only the required code is retained.
-
----
-
-### 5. **Main Execution Flow**
-- Function: `main()`
+## Summary
 - Purpose: Orchestrates the overall process of reading, scanning, parsing, generating, and executing code.
 - Steps:
   1. **Input Handling**:
@@ -1096,7 +870,16 @@ data.to_csv("data.csv", index=False, header=False)
   5. **Execution**:
      - Executes the generated Python code using Python’s `exec()` function.
 
----
+Additionally, feel free to refer to this [demo video URL](https://drive.google.com/file/d/1mGv-fCXz5CjVXc_WNQA3Xi-ydKzF5qOg/view?usp=sharing) 
+also available [here](code_generation_demo_url.txt) for a deep dive into the code generation logic.
+
+## Code Optimization
+- Function: `optimize_code(code)`
+- Purpose: Removes redundant or unused variables from the generated code to improve efficiency. (**Dead Code 
+  Elimination**)
+- Steps:
+  - Identifies unused tags in the code.
+  - Filters out unnecessary lines, ensuring only the required code is retained.
 
 ## Error Handling
 The script handles errors gracefully at various stages:
@@ -1109,101 +892,173 @@ The script handles errors gracefully at various stages:
 4. **Logical Errors**:
    - Ensures valid operations are performed, e.g., proper column indexing.
 
----
-# Unit Testing for Code Generator
+## Execution (Code Generation)
 
-The `testcodegenerator.py` file contains test cases to validate the functionality of the Code Generator module, which translates **CSVLang** code into Python code and executes it. Each test case corresponds to a sample program and verifies that the generated Python code performs the expected operations.
+You can run [this code generator](code_generator.py) using the following command. <br><br>
+**Note:** Please run this command from the repository root to ensure the links to the csv files in the generated code 
+work. The links in the sample programs are written based on the assumption that the script will be executed from the 
+repository root.
 
----
+```bash
+python code_generator.py </path/to/file.csv>
+```
 
-### Test Case 1: Sample Program 1
+or
 
-This program involves working with a CSV file containing student scores. The program starts by loading the `student_scores.csv` file into memory as a Pandas DataFrame. It then displays the first two rows of the data, focusing on the `name` and `score` columns. Afterward, it saves these rows to a new CSV file named `student_scores_new.csv`. Finally, it calculates the average score of all students and prints the result. This test ensures the proper functioning of data loading, displaying, saving, and basic aggregation operations.
+```bash
+python3 code_generator.py </path/to/file.csv>
+```
+
+## Test Cases (Code Generation)
+
+You can run the [unit test file](tests/programming_assignment_3/test_code_generator.py) that checks the code generator 
+against some [Sample Programs](#sample-programs--code-generation-) using the following command.
+
+**Note:** Please run this command from the repository root to ensure the links to the csv files in the generated code 
+work. The links in the sample programs are written based on the assumption that the script will be executed from the 
+repository root.
+
+The test file **does not intentionally include Sample Program 4** as it deletes an existing csv file which might 
+lead to 
+anomalies later on.
+
+```bash
+python tests/programming_assignment_3/test_code_generator.py
+```
+or
+
+```bash
+python3 tests/programming_assignment_3/test_code_generator.py
+```
+
+## [Sample Programs (Code Generation)](sample_programs/programming_assignment_3)
+
+
+### Program 1
+
+This program involves working with a CSV file containing student scores. The program starts by loading the 
+[student_scores.csv](csv_files/student_scores_new.csv) file into memory. It then displays the 
+first two rows of the data, focusing on the `name` and `score` columns.
+Afterward, it saves these rows to a new CSV file named [student_scores_new.csv](csv_files/student_scores_new.csv). Finally, it calculates 
+the average score of all students and prints the result. This test ensures the proper functioning of data loading, displaying, saving, and basic aggregation operations.
 
 [Source Code](sample_programs/programming_assignment_3/Program1.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program1.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program1.txt)
 
----
 
-### Test Case 2: Sample Program 2
+### Program 2
 
-This program deals with merging sales data from two CSV files, `sales.csv` and `sales1.csv`. The two files are loaded into memory as separate DataFrames, tagged as `batch1` and `batch2`. The program merges the contents of these two DataFrames into a single file named `combined_sales.csv`. Additionally, it calculates and prints the total sales for each batch. This test validates the merging of DataFrames, tagging mechanisms, and the computation of aggregated metrics.
+This program deals with merging sales data from two CSV files, [sales.csv](csv_files/sales.csv) 
+and [sales1.csv](csv_files/sales1.csv). The two files are 
+loaded into memory as separate datasets, tagged as `batch1` and `batch2`. 
+The program merges the contents of these two datasets into a single file named `combined_sales.csv`. 
+Additionally, it calculates and prints the total sales for each batch. This test validates the merging of datasets, 
+tagging mechanisms, and the computation of aggregated metrics.
 
 [Source Code](sample_programs/programming_assignment_3/Program2.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program2.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program2.txt)
 
+### Program 3
 
----
-
-### Test Case 3: Sample Program 3
-
-This program performs advanced operations on a CSV file, `sales.csv`. After loading the data, it displays the first two rows, sorted lexicographically by the `goods` column. The program then applies filtering conditions to display sales data for specific goods, such as items with sales greater than or equal to 10 and named "Paper," or sales equal to 5. Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. This test ensures the correctness of sorting, filtering, and advanced aggregations.
-
+This program performs advanced operations on a CSV file, [sales.csv](csv_files/sales.csv). After loading the data, it 
+displays the first two rows, sorted lexicographically by the `goods` column. 
+The program then applies filtering conditions to display sales data for specific goods,
+such as items with sales greater than or equal to 10 and named "Paper," or sales equal to 5. 
+Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. 
+This test ensures the correctness of sorting, filtering, and advanced aggregations.
 
 [Source Code](sample_programs/programming_assignment_3/Program3.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program3.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program3.txt)
 
----
 
-### Test Case 4: Sample Program 4
+### Program 4
 
-This program demonstrates file handling and data manipulation tasks. It starts by loading the `sales.csv` file, then deletes it from the filesystem to simulate cleanup. A new file named `new_sales.csv` is created, and several rows of data are added to it. The program then increments the `sales` column values by 10 and displays the updated results. This test verifies file creation, deletion, data appending, and column-wise updates in the DataFrame.
+This program demonstrates file handling and data manipulation tasks. It starts by loading the [sales.csv](csv_files/sales.csv)
+file, then deletes it from the filesystem to simulate cleanup. A new file named [new_sales.csv](csv_files/new_sales.csv) is 
+created, and several rows of data are added to it. The program then increments the `sales` column values by 10 and displays the updated results. 
+This test verifies file creation, deletion, data appending, and column-wise updates in the data.
+
+This program also loads [matrix.csv](csv_files/matrix.csv) and tags it as `dead_code`. But we don't see that in the generated 
+code as its not used after loading, thus signifying the [Dead Code Elimination](#code-optimization) optimization capabilities of the 
+compiler.
 
 [Source Code](sample_programs/programming_assignment_3/Program4.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program4.txt)<br>
 [Program Output](sample_outputs/programming_assignment_3/Program4.txt)
 
----
+### Program 5
 
-### Test Case 5: Sample Program 5
-
-This program tests error handling in the **Code Generator**. It attempts to load a CSV file without providing a valid header argument, resulting in a syntax error. The program ensures that the Code Generator can detect and report syntax issues accurately. Specifically, it captures the error message indicating that a string was expected but a keyword (`header`) was found. This test case demonstrates the robustness of the error detection mechanism.
+This program tests error handling in the **Code Generator**. It attempts to load a CSV file without providing a 
+valid path argument, resulting in a syntax error. The program ensures that the Code Generator can detect and report 
+syntax issues accurately. Specifically, it captures the error message indicating that a string was expected but a keyword (`header`) was found. This test case demonstrates the robustness of the error detection mechanism.
 
 [Source Code](sample_programs/programming_assignment_3/Program5.csvlang)<br>
 [Compiler Output](compiler_outputs/programming_assignment_3/Program5.txt)<br>
 Program Output: No output produced as there are syntax error(s) present.
 
----
+## Installation and Usage (Code Generation)
 
-# Installation and Usage (Code Generation)
+As part of the code generation phase, we are using the [Pandas](https://pandas.pydata.org/) library from Python.
+So, you can either install it directly using either of the two following commands.
 
-For Python and Homebrew, you can follow the same installation steps as shown for setting up dependencies.
+```bash
+pip install pandas
+```
 
-Additionally, you can also run the pre-existing shell scripts specifically added for code generation, which take care of the installations and execution.
+or
 
-### Available Shell Scripts:
-1. **run_code_generator_tests.sh**: Runs all the test cases for the code generator.
-2. **run_code_generator.sh**: Executes the code generation process for a given CSVLang file.
-3. **run_sample_programs.sh**: Generates and executes Python code for all the sample programs.
+```bash
+pip3 install pandas
+```
 
-### Steps to Run:
-1. Navigate to the shell scripts folder:
+You could also install it from the [requirements](requirements.txt) file.
+
+```bash
+pip install -r requirements.txt 
+```
+
+or
+
+```bash
+pip3 install -r requirements.txt 
+```
+
+
+Other than that, for [Python](https://www.python.org/) and [Homebrew](https://brew.sh/), you can follow the same 
+installation steps as shown [above](#installation-and-usage-parsing) for parsing.
+
+Additionally, you can also run the pre-existing [shell scripts](shell_scripts/programming_assignment_3) 
+specifically added for code generation, which take care of the installations.
+
+[run_code_generator_tests.sh](shell_scripts/programming_assignment_3/run_code_generator_tests.sh): It runs all the 
+[test cases](tests/programming_assignment_3/test_code_generator.py). <br>
+[run_code_generator.sh](shell_scripts/programming_assignment_3/run_code_generator.sh): It performs syntactic analysis 
+on a csvlang file which is passed as an argument. <br>
+[run_sample_programs.sh](shell_scripts/programming_assignment_3/run_sample_programs.sh): It performs syntactic 
+analysis and displays the outputs of all the [Sample Programs](sample_programs/programming_assignment_3).
+
+**Note:** Please do not navigate to the directory of the [shell scripts](shell_scripts/programming_assignment_3), 
+instead run this command from the repository root to ensure the links to the csv files in the generated code work. 
+The links in the sample programs are written based on the assumption that the script will be executed from the repository root.
+
+1. Run the following commands to make it executable.
    ```bash
-   cd shell_scripts/programming_assignment_3
+   chmod +x shell_scripts/programming_assignment_3/run_code_generator_tests.sh
+   chmod +x shell_scripts/programming_assignment_3/run_code_generator.sh
+   chmod +x shell_scripts/programming_assignment_3/run_sample_programs.sh
    ```
-2. Run the following commands to make it executable.
+2. Run the shell scripts using the following commands.
    ```bash
-   chmod +x run_code_generator_tests.sh
-   chmod +x run_code_generator.sh
-   chmod +x run_sample_programs.sh
+   ./shell_scripts/programming_assignment_3/run_code_generator_tests.sh
    ```
-
-### Execute the shell scripts using the commands below:
-
-- **To run all test cases:**
-  ```bash
-  ./run_code_generator_tests.sh
-  ```
-- **To run the code generator for a specific CSVLang file:**
    ```bash
-   ./run_parser.sh <path/to/test.csvlang>
+   ../shell_scripts/programming_assignment_3/run_code_generator.sh <path/to/test.csvlang>
    ```
- - **To run all sample programs:**  
    ```bash
-   ./run_sample_programs.sh
+   ./shell_scripts/programming_assignment_3/run_sample_programs.sh
    ```
    
 ## Contribution
