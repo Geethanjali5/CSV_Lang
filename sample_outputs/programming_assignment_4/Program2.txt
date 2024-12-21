@@ -1,0 +1,13 @@
+CSVLang Output
+
+   goods  sales
+2  Bread      5
+1   Eggs     34
+
+   goods  sales
+0  Paper     40
+2  Bread      5
+
+The maximum sales:  40
+The minimum sales:  5
+The total number of goods:  3

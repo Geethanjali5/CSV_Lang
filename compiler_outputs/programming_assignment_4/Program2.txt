@@ -1,0 +1,15 @@
+Generated Python Code:
+
+from pathlib import Path
+import pandas as pd
+
+a0 = pd.read_csv("csv_files/sales.csv", header=[0])
+a4 = (a0.sort_values(by=['goods']).head(2))
+print(a4.loc[:, ['goods', 'sales']])
+print()
+a4 = (a0.sort_values(by=[]).loc[(((a0["sales"] >= (2 << 0) + (2 << 2)) & (a0["goods"] == "Paper")) | (a0["sales"] == 5))])
+print(a4.loc[:, ['goods', 'sales']])
+print()
+print("The maximum sales: ", a0["sales"].max())
+print("The minimum sales: ", a0["sales"].min())
+print("The total number of goods: ", a0["goods"].nunique())
