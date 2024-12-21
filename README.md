@@ -1209,7 +1209,7 @@ the Algebraic Simplification step with clarity.
 This program performs advanced operations on a CSV file, [sales.csv](csv_files/sales.csv). After loading the data, it 
 displays the first two rows, sorted lexicographically by the `goods` column. 
 The program then applies filtering conditions to display sales data for specific goods,
-such as items with sales greater than or equal to 28, which is expressed as (30 + 12) - 14) and named "Paper," or sales equal 
+such as items with sales greater than or equal to 28, which is expressed as (30 + 12) - 14 and named "Paper," or sales equal 
 to 5. Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. 
 This test ensures the correctness of sorting, filtering, and advanced aggregations.
 
