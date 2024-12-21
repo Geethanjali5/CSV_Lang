@@ -1124,8 +1124,8 @@ using the techniques mentioned below.
    second_time = first_time
   ```
 
-Additionally, feel free to refer to this [demo video URL](https://drive.google.com/file/d/1mGv-fCXz5CjVXc_WNQA3Xi-ydKzF5qOg/view?usp=sharing) 
-also available [here](code_generation_demo_url.txt) for a deep dive into the code generation logic.
+Additionally, feel free to refer to this [demo video URL](https://drive.google.com/file/d/1zw0hZmoT_bN50ty6yf-PIj2wJfKjMSze/view?usp=sharing) 
+also available [here](optimisation_demo_url.txt) for a deep dive into the code generation logic.
 
 ## Execution (Optimisation)
 
