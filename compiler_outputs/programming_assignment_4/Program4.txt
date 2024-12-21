@@ -1,0 +1,13 @@
+Generated Python Code:
+
+from pathlib import Path
+import pandas as pd
+
+batch1 = pd.read_csv("csv_files/matrix.csv", header=None)
+batch2 = batch1
+a4 = (batch1.sort_values(by=[]))
+print(a4.iloc[:, [0, 1]])
+print()
+a4 = (batch2.sort_values(by=[]))
+print(a4.iloc[:, [1]])
+print()

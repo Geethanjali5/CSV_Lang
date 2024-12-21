@@ -1,0 +1,5 @@
+LOAD ("csv_files/matrix.csv", header = false, tag = "batch1");
+LOAD ("csv_files/matrix.csv", header = false, tag = "batch2");
+
+DISPLAY(1, 2, tag="batch1");
+DISPLAY(2, tag="batch2");

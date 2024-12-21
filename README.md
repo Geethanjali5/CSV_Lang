@@ -1061,6 +1061,218 @@ The links in the sample programs are written based on the assumption that the sc
    ./shell_scripts/programming_assignment_3/run_sample_programs.sh
    ```
    
+# CSVLang Optimisation Algorithm
+
+## Overview
+The [optimised_code_generator.py](optimised_code_generator.py) optimises the generated intermediate Python code 
+using the techniques mentioned below.
+
+## Summary
+- Purpose: Optimising the intermediate code generated to increase the speed and efficiency of execution.
+- Types of Optimisations implemented:
+  1. **Dead Code Elimination**:
+  - Unused lines of code is removed from the intermediate code generated.
+  
+  ```python
+  dead_code = pd.read_csv("unused_file.csv", header=[0])
+  data = pd.read_csv("used_file.csv", header=[0])
+  print(data.loc[:, ['name', 'score']])
+  ```
+
+    is optimised to:
+    ```python
+    data = pd.read_csv("used_file.csv", header=[0])
+    print(data.loc[:, ['name', 'score']])
+  ```
+  2. **Algebraic Simplification**:
+  - Costly algebraic operations are re-written in simpler terms to cut down on computation cost.
+  
+  ```python
+  var = data.sort_values(by=[]).loc[(data["sales"] >= (2 * 5))]
+  ```
+
+    is optimised to:
+    ```python
+    var = data.sort_values(by=[]).loc[(data["sales"] >= (2 << 0) + (2 << 2))]
+  ```
+  
+  3. **Constant Folding**:
+  - Arithmetic calculations involving two constants are computed at compile and the result is used in the 
+    intermediate code so as to save computation time during execution.
+  
+  ```python
+  var = data.sort_values(by=[]).loc[(data["sales"] >= (30 + 12) - 14)]
+  ```
+
+     is optimised to:
+  ```python
+  var = data.sort_values(by=[]).loc[(data["sales"] >= 28)]
+  ```
+   
+  4. **Copy Propagation**:
+  - If the same file is being read twice, then second variable can just refer to the first one which points to 
+    the same file instead of reloading the same file onto memory again.
+  
+   ```python
+   first_time = pd.read_csv("same_file.csv", header=[0])
+   second_time = pd.read_csv("same_file.csv", header=[0])
+  ```
+
+     is optimised to:
+   ```python
+   first_time = pd.read_csv("same_file.csv", header=[0])
+   second_time = first_time
+  ```
+
+Additionally, feel free to refer to this [demo video URL](https://drive.google.com/file/d/1mGv-fCXz5CjVXc_WNQA3Xi-ydKzF5qOg/view?usp=sharing) 
+also available [here](code_generation_demo_url.txt) for a deep dive into the code generation logic.
+
+## Execution (Optimisation)
+
+You can run [this optimised code generator](optimised_code_generator.py) using the following command. <br><br>
+**Note:** Please run this command from the repository root to ensure the links to the csv files in the generated code 
+work. The links in the sample programs are written based on the assumption that the script will be executed from the 
+repository root.
+
+```bash
+python optimised_code_generator.py </path/to/file.csv>
+```
+
+or
+
+```bash
+python3 optimised_code_generator.py </path/to/file.csv>
+```
+
+## Test Cases (Optimisation)
+
+You can run the [unit test file](tests/programming_assignment_4/test_optimised_code_generator.py) that checks the 
+optimised code generator against some [Sample Programs](#sample-programs--optimisation-) using the following command.
+
+**Note:** Please run this command from the repository root to ensure the links to the csv files in the generated code 
+work. The links in the sample programs are written based on the assumption that the script will be executed from the 
+repository root.
+
+```bash
+python tests/programming_assignment_4/test_optimised_code_generator.py
+```
+or
+
+```bash
+python3 tests/programming_assignment_4/test_optimised_code_generator.py
+```
+
+## [Sample Programs (Optimisation)](sample_programs/programming_assignment_4)
+
+
+### Program 1 (Dead Code Elimination)
+
+This program involves working with a CSV file containing student scores. The program starts by loading the 
+[student_scores.csv](csv_files/student_scores_new.csv) file into memory. It then displays the 
+first two rows of the data, focusing on the `name` and `score` columns.
+Afterward, it saves these rows to a new CSV file named [student_scores_new.csv](csv_files/student_scores_new.csv). Finally, it calculates 
+the average score of all students and prints the result. This test ensures the proper functioning of data loading, displaying, saving, and basic aggregation operations.
+
+This program also loads [matrix.csv](csv_files/matrix.csv) and tags it as `dead_code`. But we don't see that in the [generated 
+code](compiler_outputs/programming_assignment_4/Program1.txt) as its not used after loading, thus signifying the 
+[Dead Code Elimination](#summary-1) optimization capabilities of the compiler.
+
+[Source Code](sample_programs/programming_assignment_4/Program1.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_4/Program1.txt)<br>
+[Program Output](sample_outputs/programming_assignment_4/Program1.txt)
+
+
+### Program 2 (Algebraic Simplification)
+
+This program performs advanced operations on a CSV file, [sales.csv](csv_files/sales.csv). After loading the data, it 
+displays the first two rows, sorted lexicographically by the `goods` column. 
+The program then applies filtering conditions to display sales data for specific goods,
+such as items with sales greater than or equal to 10, which is expressed as (2 * 5) and named "Paper," or sales equal to 5. 
+Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. 
+This test ensures the correctness of sorting, filtering, and advanced aggregations.
+
+Here in the [generated code](compiler_outputs/programming_assignment_4/Program2.txt) we can see that (2 * 5) is 
+expressed as (2 << 0) + (2 << 2), thus speeding up the arithmetic operation. This shows the
+[algebraic simplification](#summary-1) 
+capabilities of the compiler.
+
+**Note:** In practice, this should ideally be further optimised with Constant Folding, which we are doing as shown 
+in [Program 3](#program-3-constant-folding). However, it is not shown here so that we can demonstrate 
+the Algebraic Simplification step with clarity.
+
+[Source Code](sample_programs/programming_assignment_4/Program2.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_4/Program2.txt)<br>
+[Program Output](sample_outputs/programming_assignment_4/Program2.txt)
+
+### Program 3 (Constant Folding)
+
+This program performs advanced operations on a CSV file, [sales.csv](csv_files/sales.csv). After loading the data, it 
+displays the first two rows, sorted lexicographically by the `goods` column. 
+The program then applies filtering conditions to display sales data for specific goods,
+such as items with sales greater than or equal to 28, which is expressed as (30 + 12) - 14) and named "Paper," or sales equal 
+to 5. Furthermore, it calculates and displays the maximum sales, minimum sales, and the total number of unique goods in the dataset. 
+This test ensures the correctness of sorting, filtering, and advanced aggregations.
+
+Here in the [generated code](compiler_outputs/programming_assignment_4/Program3.txt) we can see that (30 + 12) - 14) is 
+compressed as 28, thus speeding up the arithmetic operation. This shows the [constant folding](#summary-1)
+capabilities of the compiler.
+
+[Source Code](sample_programs/programming_assignment_4/Program3.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_4/Program3.txt)<br>
+[Program Output](sample_outputs/programming_assignment_4/Program3.txt)
+
+
+### Program 4 (Copy Propagation)
+
+This program loads the same file [matrix.csv](csv_files/matrix.csv) twice with two different tags. Then displays the 
+first two columns of the first tag 
+and only the second column of the second tag.
+
+Here in the [generated code](compiler_outputs/programming_assignment_4/Program4.txt) we can see that the 
+tag `batch2` directly refers to tag `batch1` (which also refers to the same csv file) instead of reading the same csv 
+once again, thus optimising the execution. This shows the [copy propagation](#summary-1)
+capabilities of the compiler.
+
+[Source Code](sample_programs/programming_assignment_4/Program4.csvlang)<br>
+[Compiler Output](compiler_outputs/programming_assignment_4/Program4.txt)<br>
+[Program Output](sample_outputs/programming_assignment_4/Program4.txt)
+
+## Installation and Usage (Optimisation)
+
+For [Python](https://www.python.org/), [Homebrew](https://brew.sh/) and [Pandas](https://pandas.pydata.org/), you can follow the same 
+installation steps as shown [above](#installation-and-usage-code-generation) for code generation.
+
+Additionally, you can also run the pre-existing [shell scripts](shell_scripts/programming_assignment_4) 
+specifically added for optimisation, which take care of the installations.
+
+[run_optimised_code_generator_tests.sh](shell_scripts/programming_assignment_4/run_optimised_code_generator_tests.sh): It runs 
+all the [test cases](tests/programming_assignment_4/test_optimised_code_generator.py). <br>
+[run_optimised_code_generator.sh](shell_scripts/programming_assignment_4/run_optimised_code_generator.sh): It performs 
+syntactic analysis on a csvlang file which is passed as an argument. <br>
+[run_sample_programs.sh](shell_scripts/programming_assignment_4/run_sample_programs.sh): It performs syntactic 
+analysis and displays the outputs of all the [Sample Programs](sample_programs/programming_assignment_4).
+
+**Note:** Please do not navigate to the directory of the [shell scripts](shell_scripts/programming_assignment_4), 
+instead run this command from the repository root to ensure the links to the csv files in the generated code work. 
+The links in the sample programs are written based on the assumption that the script will be executed from the repository root.
+
+1. Run the following commands to make it executable.
+   ```bash
+   chmod +x shell_scripts/programming_assignment_4/run_optimised_code_generator_tests.sh
+   chmod +x shell_scripts/programming_assignment_4/run_optimised_code_generator.sh
+   chmod +x shell_scripts/programming_assignment_4/run_sample_programs.sh
+   ```
+2. Run the shell scripts using the following commands.
+   ```bash
+   ./shell_scripts/programming_assignment_4/run_optimised_code_generator_tests.sh
+   ```
+   ```bash
+   ./shell_scripts/programming_assignment_4/run_optimised_code_generator.sh <path/to/test.csvlang>
+   ```
+   ```bash
+   ./shell_scripts/programming_assignment_4/run_sample_programs.sh
+   ```
+   
 ## Contribution
 
 **Team Name**: Compile and Conquer
